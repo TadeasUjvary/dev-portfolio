@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tadeáš Ujváry — Web Developer</title>
+<meta name="description" content="Tadeáš Ujváry — web developer z Lub u Chebu. Frontend a full-stack projekty: Next.js, TypeScript, React.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBFBFA;
+    --surface:#FFFFFF;
+    --ink:#111111;
+    --muted:#787774;
+    --line:#EAEAEA;
+    --pale-blue-bg:#E1F3FE; --pale-blue-tx:#1F6C9F;
+    --pale-green-bg:#EDF3EC; --pale-green-tx:#346538;
+    --pale-yellow-bg:#FBF3DB; --pale-yellow-tx:#956400;
+    --pale-red-bg:#FDEBEC; --pale-red-tx:#9F2F2D;
+    --sans:'SF Pro Display','Helvetica Neue','Helvetica',Arial,sans-serif;
+    --serif:'Newsreader',Georgia,'Times New Roman',serif;
+    --mono:'JetBrains Mono','SF Mono',ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:var(--sans);font-size:16px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  }
+  a{color:inherit;text-decoration:none}
+  ::selection{background:#111;color:#fff}
+
+  /* ambient drift */
+  .ambient{
+    position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+  }
+  .ambient::before{
+    content:"";position:absolute;top:-20%;left:50%;
+    width:70vw;height:70vw;border-radius:50%;
+    background:radial-gradient(circle,rgba(150,100,0,0.05),transparent 60%);
+    transform:translateX(-50%);
+    animation:drift 26s ease-in-out infinite alternate;
+  }
+  @keyframes drift{from{transform:translate(-55%,0)}to{transform:translate(-45%,6%)}}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+
+  /* nav */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(251,251,250,.78);backdrop-filter:saturate(180%) blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{font-family:var(--mono);font-size:13px;letter-spacing:-.01em}
+  .brand b{font-weight:500}
+  .navlinks{display:flex;gap:30px;align-items:center;font-size:14px;color:var(--muted)}
+  .navlinks a{transition:color .2s}
+  .navlinks a:hover{color:var(--ink)}
+  .navlinks .cta{
+    color:#fff;background:var(--ink);padding:8px 16px;border-radius:5px;
+    transition:background .2s,transform .12s;
+  }
+  .navlinks .cta:hover{background:#333;color:#fff}
+  .navlinks .cta:active{transform:scale(.98)}
+  @media(max-width:640px){.navlinks a:not(.cta){display:none}}
+
+  /* hero */
+  header{padding:120px 0 110px}
+  .avail{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--pale-green-tx);background:var(--pale-green-bg);
+    padding:6px 12px;border-radius:9999px;margin-bottom:34px;
+  }
+  .avail .dot{width:6px;height:6px;border-radius:50%;background:var(--pale-green-tx)}
+  h1{
+    font-family:var(--serif);font-weight:400;
+    font-size:clamp(2.7rem,6.4vw,5rem);line-height:1.04;letter-spacing:-.03em;
+    max-width:14ch;
+  }
+  h1 em{font-style:italic;color:var(--muted)}
+  .lede{
+    margin-top:30px;max-width:52ch;font-size:1.12rem;color:#2F3437;line-height:1.65;
+  }
+  .meta{
+    margin-top:42px;display:flex;flex-wrap:wrap;gap:10px 28px;
+    font-family:var(--mono);font-size:12.5px;color:var(--muted);
+  }
+  .meta span{display:inline-flex;align-items:center;gap:8px}
+  .meta svg{width:13px;height:13px;stroke:var(--muted)}
+
+  /* section heading */
+  .sec{padding:84px 0;border-top:1px solid var(--line)}
+  .sec-h{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:46px;gap:20px;flex-wrap:wrap;
+  }
+  .sec-h h2{
+    font-family:var(--serif);font-weight:400;font-size:2rem;letter-spacing:-.02em;
+  }
+  .sec-h .idx{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.05em}
+
+  /* bento projects */
+  .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+  .card{
+    grid-column:span 3;background:var(--surface);border:1px solid var(--line);
+    border-radius:12px;padding:30px;display:flex;flex-direction:column;
+    min-height:220px;transition:box-shadow .22s ease,transform .22s ease;
+  }
+  .card.lg{grid-column:span 4}
+  .card.sm{grid-column:span 2}
+  .card.wide{grid-column:span 6}
+  .card:hover{box-shadow:0 2px 14px rgba(0,0,0,.045);transform:translateY(-2px)}
+  .card .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .tag{
+    font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+    padding:5px 10px;border-radius:9999px;
+  }
+  .t-ts{background:var(--pale-blue-bg);color:var(--pale-blue-tx)}
+  .t-full{background:var(--pale-yellow-bg);color:var(--pale-yellow-tx)}
+  .t-web{background:var(--pale-green-bg);color:var(--pale-green-tx)}
+  .t-tool{background:var(--pale-red-bg);color:var(--pale-red-tx)}
+  .card h3{font-family:var(--serif);font-size:1.5rem;font-weight:400;letter-spacing:-.02em}
+  .card p{margin-top:10px;color:var(--muted);font-size:.94rem;line-height:1.6;flex:1}
+  .stack{
+    margin-top:18px;font-family:var(--mono);font-size:11px;color:var(--muted);
+    letter-spacing:.02em;
+  }
+  .links{margin-top:20px;display:flex;gap:8px}
+  .links a{
+    font-size:12.5px;font-family:var(--mono);padding:7px 13px;border-radius:6px;
+    border:1px solid var(--line);transition:background .18s,color .18s;
+    display:inline-flex;align-items:center;gap:7px;
+  }
+  .links a svg{width:12px;height:12px}
+  .links a.live{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .links a.live:hover{background:#333}
+  .links a.code:hover{background:#F2F2F1}
+  @media(max-width:820px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .card,.card.lg,.card.sm,.card.wide{grid-column:span 2}
+  }
+  @media(max-width:560px){
+    .grid{grid-template-columns:1fr}
+    .card,.card.lg,.card.sm,.card.wide{grid-column:span 1}
+  }
+
+  /* stack list */
+  .stacklist{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .stacklist div{background:var(--surface);padding:26px 28px}
+  .stacklist h4{font-family:var(--mono);font-size:11px;letter-spacing:.07em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .stacklist p{font-size:.96rem;color:var(--ink);line-height:1.7}
+  @media(max-width:720px){.stacklist{grid-template-columns:1fr}}
+
+  /* about */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+  .about p{font-size:1.05rem;color:#2F3437;line-height:1.75;margin-bottom:18px;max-width:46ch}
+  .about .facts{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:2.1}
+  .about .facts b{color:var(--ink);font-weight:500}
+  @media(max-width:720px){.about{grid-template-columns:1fr;gap:34px}}
+
+  /* contact */
+  .contact{text-align:center;padding:110px 0}
+  .contact .idx{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.06em}
+  .contact h2{font-family:var(--serif);font-weight:400;
+    font-size:clamp(2.4rem,6vw,4rem);letter-spacing:-.03em;margin:22px 0 14px}
+  .contact h2 em{font-style:italic;color:var(--muted)}
+  .contact .mail{
+    display:inline-block;margin-top:14px;font-size:1.15rem;
+    border-bottom:1px solid var(--ink);padding-bottom:3px;transition:opacity .2s;
+  }
+  .contact .mail:hover{opacity:.6}
+  .socials{margin-top:38px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .socials a{
+    font-family:var(--mono);font-size:13px;padding:10px 18px;
+    border:1px solid var(--line);border-radius:6px;background:var(--surface);
+    transition:background .18s;
+  }
+  .socials a:hover{background:#F2F2F1}
+
+  footer{border-top:1px solid var(--line);padding:34px 0}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+  /* scroll entry */
+  .reveal{opacity:0;transform:translateY(12px);
+    transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div class="ambient"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><b>Tadeáš Ujváry</b> — web developer</div>
+    <div class="navlinks">
+      <a href="#work">Práce</a>
+      <a href="#stack">Stack</a>
+      <a href="#about">O mně</a>
+      <a class="cta" href="#contact">Kontakt</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="avail reveal in"><span class="dot"></span>Otevřený zakázkám</span>
+    <h1 class="reveal in">Stavím weby, které <em>vypadají dobře</em> a fungují.</h1>
+    <p class="lede reveal in">Web developer z Lub u Chebu. Dělám frontend i full-stack —
+      od firemních prezentací po aplikace v Next.js a TypeScriptu. Studuju IT na ISŠTE Sokolov
+      a kódím od střední.</p>
+    <div class="meta reveal in">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Luby u Chebu, ČR</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8h18"/></svg>Ročník 2007</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 17l6-6-6-6"/><path d="M12 19h8"/></svg>HTML · CSS · TS · Python · Swift</span>
+    </div>
+  </div>
+</header>
+
+<section class="sec" id="work">
+  <div class="wrap">
+    <div class="sec-h reveal">
+      <h2>Vybraná práce</h2>
+      <span class="idx">01 — projekty</span>
+    </div>
+    <div class="grid">
+
+      <article class="card wide reveal">
+        <div class="top"><span class="tag t-ts">TypeScript · AI</span></div>
+        <h3>CopyCzech</h3>
+        <p>AI copywriter pro české e-shopy — generuje produktové popisky a marketingové texty
+           v přirozené češtině. Nasazeno na Vercelu.</p>
+        <div class="stack">Next.js · TypeScript · OpenAI API</div>
+        <div class="links">
+          <a class="live" href="https://copyczech.vercel.app" target="_blank" rel="noopener">Live
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="top"><span class="tag t-ts">TypeScript</span></div>
+        <h3>WeatherVerse</h3>
+        <p>Webová aplikace pro počasí s čistým rozhraním a daty v reálném čase.</p>
+        <div class="stack">TypeScript · Weather API</div>
+        <div class="links">
+          <a class="live" href="https://weather-verse-rho.vercel.app" target="_blank" rel="noopener">Live
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+          <a class="code" href="https://github.com/TadeasUjvary/WeatherVerse" target="_blank" rel="noopener">Kód</a>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="top"><span class="tag t-web">Firemní web</span></div>
+        <h3>Zemní práce Kolby</h3>
+        <p>Prezentační web pro firmu na zemní a výkopové práce — služby, kontakt,
+           responzivní design. Postaveno a nasazeno od nuly.</p>
+        <div class="stack">HTML · CSS · JS · Vercel</div>
+        <div class="links">
+          <a class="live" href="https://zemni-prace-kolby.vercel.app" target="_blank" rel="noopener">Live
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="top"><span class="tag t-web">Event web</span></div>
+        <h3>Dřenice Sound</h3>
+        <p>Web pro letní hudební event, na jehož organizaci jsem se podílel — line-up,
+           vstupné, info pro návštěvníky.</p>
+        <div class="stack">HTML · CSS · JS</div>
+        <div class="links">
+          <a class="live" href="https://drenice-sound.vercel.app" target="_blank" rel="noopener">Live
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="top"><span class="tag t-web">Redesign</span></div>
+        <h3>Linhart Kovovýroba</h3>
+        <p>Kompletní redesign zastaralého firemního webu kovovýroby do tmavého
+           industriálního stylu.</p>
+        <div class="stack">HTML · Tailwind · Alpine.js</div>
+        <div class="links">
+          <a class="code" href="https://github.com/TadeasUjvary/linhart-kovovyroba" target="_blank" rel="noopener">Kód</a>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="top"><span class="tag t-tool">Nástroj</span></div>
+        <h3>Research PDF Viewer</h3>
+        <p>Webový prohlížeč PDF dokumentů zaměřený na čtení odborných textů.</p>
+        <div class="stack">HTML · JS · PDF.js</div>
+        <div class="links">
+          <a class="live" href="https://pdf-viewer-one-olive.vercel.app" target="_blank" rel="noopener">Live
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+          <a class="code" href="https://github.com/TadeasUjvary/research-pdf-viewer" target="_blank" rel="noopener">Kód</a>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="top"><span class="tag t-web">Web</span></div>
+        <h3>Sphronek</h3>
+        <p>Prezentační web nasazený na Vercelu.</p>
+        <div class="stack">HTML · CSS · JS</div>
+        <div class="links">
+          <a class="live" href="https://sphronek.vercel.app" target="_blank" rel="noopener">Live
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="stack">
+  <div class="wrap">
+    <div class="sec-h reveal">
+      <h2>Technologie</h2>
+      <span class="idx">02 — stack</span>
+    </div>
+    <div class="stacklist reveal">
+      <div>
+        <h4>Frontend</h4>
+        <p>HTML, CSS, JavaScript, TypeScript, React, Next.js, Tailwind CSS, Alpine.js</p>
+      </div>
+      <div>
+        <h4>Backend & data</h4>
+        <p>Node.js, Next.js API, Prisma, PostgreSQL, NextAuth, Python</p>
+      </div>
+      <div>
+        <h4>Nástroje & ostatní</h4>
+        <p>Git &amp; GitHub, Vercel, Swift, MS Office, Cambridge English B1</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="sec-h reveal">
+      <h2>O mně</h2>
+      <span class="idx">03 — kdo jsem</span>
+    </div>
+    <div class="about reveal">
+      <div>
+        <p>Jsem Tadeáš, web developer z Lub u Chebu. Studuju obor Informační technologie
+           na ISŠTE Sokolov a weby stavím od střední — od jednoduchých firemních prezentací
+           po full-stack aplikace.</p>
+        <p>Baví mě, když je web čistý, rychlý a dotažený do detailu. Nejradši pracuju
+           v Next.js a TypeScriptu, ale rád si sáhnu i na čisté HTML/CSS, když to dává smysl.</p>
+      </div>
+      <div class="facts">
+        <b>Lokace</b> — Luby u Chebu, ČR<br>
+        <b>Škola</b> — ISŠTE Sokolov, IT (2023–2027)<br>
+        <b>Jazyky</b> — Čeština, Angličtina B1<br>
+        <b>Zaměření</b> — Frontend &amp; full-stack web<br>
+        <b>Stav</b> — Otevřený novým zakázkám
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap reveal">
+    <span class="idx">04 — kontakt</span>
+    <h2>Máš projekt? <em>Napiš mi.</em></h2>
+    <a class="mail" href="mailto:taujvyk@gmail.com">taujvyk@gmail.com</a>
+    <div class="socials">
+      <a href="mailto:taujvyk@gmail.com">E-mail</a>
+      <a href="tel:+420723065427">+420 723 065 427</a>
+      <a href="https://github.com/TadeasUjvary" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Tadeáš Ujváry</span>
+    <span>Web developer · Luby u Chebu</span>
+  </div>
+</footer>
+
+<script>
+  const io=new IntersectionObserver((es)=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+  },{threshold:.12});
+  document.querySelectorAll('.reveal:not(.in)').forEach((el,i)=>{
+    el.style.transitionDelay=(i%6*70)+'ms';io.observe(el);
+  });
+</script>
+</body>
+</html>
