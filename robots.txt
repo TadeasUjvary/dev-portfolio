@@ -11,4 +11,4 @@ Allow: /
 User-agent: bingbot
 Allow: /
 
-Sitemap: https://portfolio-tau-navy-44.vercel.app/sitemap.xml
+Sitemap: https://tadeas-ujvary.vercel.app/sitemap.xml
