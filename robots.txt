@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Vyhledávače (Google, Seznam, Bing) – plný přístup
+User-agent: Googlebot
+Allow: /
+
+User-agent: SeznamBot
+Allow: /
+
+User-agent: bingbot
+Allow: /
+
+Sitemap: https://portfolio-tau-navy-44.vercel.app/sitemap.xml

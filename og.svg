@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="Georgia, 'Times New Roman', serif">
+  <rect width="1200" height="630" fill="#FBFBFA"/>
+  <circle cx="980" cy="120" r="360" fill="#FBF3DB" opacity="0.45"/>
+  <rect x="64" y="64" width="1072" height="502" rx="20" fill="none" stroke="#EAEAEA" stroke-width="1.5"/>
+  <text x="104" y="150" font-family="'JetBrains Mono', monospace" font-size="22" letter-spacing="2" fill="#787774">TADEÁŠ UJVÁRY — WEB DEVELOPER</text>
+  <text x="100" y="300" font-size="76" fill="#111111" letter-spacing="-2">Tvorba webových stránek</text>
+  <text x="100" y="392" font-size="76" fill="#111111" letter-spacing="-2">na míru<tspan fill="#787774" font-style="italic"> — levný web.</tspan></text>
+  <text x="104" y="492" font-family="'JetBrains Mono', monospace" font-size="24" fill="#346538">● Cheb · Sokolov · Karlovy Vary · celá ČR</text>
+  <text x="104" y="535" font-family="'JetBrains Mono', monospace" font-size="20" fill="#787774">Web pro firmy i živnostníky · redesign · e-shop</text>
+</svg>
