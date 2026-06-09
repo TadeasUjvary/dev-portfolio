@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reference — Hotové realizace · Ginger Instal</title>
+<meta name="description" content="Galerie hotových instalatérských prací — koupelny, topení, kanalizace v Karlovarském kraji.">
+<link rel="icon" type="image/png" href="/demos/instalater/assets/logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/demos/instalater/assets/styles.css">
+<style>
+  .ref-tabs{display:flex;gap:10px;justify-content:center;margin-bottom:40px;flex-wrap:wrap}
+  .ref-tabs button{background:transparent;border:1px solid var(--line);color:var(--ink);padding:10px 22px;border-radius:999px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s}
+  .ref-tabs button:hover{border-color:var(--ink)}
+  .ref-tabs button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .ref-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:720px){ .ref-grid{grid-template-columns:repeat(2,1fr)} }
+  .ref-grid a{display:block;position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:6px;background:var(--cream-2);cursor:zoom-in;transition:transform .2s}
+  .ref-grid a img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+  .ref-grid a:hover img{transform:scale(1.05)}
+  .ref-grid .cap{position:absolute;bottom:0;left:0;right:0;padding:14px 16px;background:linear-gradient(transparent,rgba(26,20,16,.85));color:#fff;font-size:13px;font-weight:500}
+  .ref-grid .cap small{display:block;color:var(--orange-soft);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span>📍 Cheb &amp; celý Karlovarský kraj</span>
+    <div class="right">
+      <a href="tel:+420725745882">+420 725 745 882</a>
+      <a href="mailto:zkorodovanej.instalater@gmail.com"><span class="hide-sm">Napsat e-mail</span></a>
+    </div>
+  </div>
+</div>
+
+<header class="main">
+  <div class="nav">
+    <a href="/demos/instalater/" class="brand">
+      <img src="/demos/instalater/assets/logo.webp" alt="Ginger Instal">
+      <div class="name">Ginger Instal<small>Cheb · Karlovarský kraj</small></div>
+    </a>
+    <nav class="links">
+      <ul>
+        <li><a href="/demos/instalater/">Domů</a></li>
+        <li><a href="/demos/instalater/sluzby">Služby</a></li>
+        <li><a href="/demos/instalater/reference" class="active">Reference</a></li>
+        <li><a href="/demos/instalater/kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+    <a href="tel:+420725745882" class="cta">Zavolat</a>
+    <button class="burger" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<section class="page-head wrap">
+  <span class="eyebrow">Naše práce</span>
+  <h1>Vybrané <em>realizace</em></h1>
+  <p>Více než 500 dokončených projektů napříč Karlovarským krajem. Tady jsou některé z těch, které stojí za pozornost.</p>
+</section>
+
+<section class="wrap" style="padding-top:0">
+  <div class="ref-tabs reveal" id="tabs">
+    <button class="active" data-cat="all">Vše</button>
+    <button data-cat="voda">Voda</button>
+    <button data-cat="topeni">Topení</button>
+    <button data-cat="kanal">Kanalizace</button>
+    <button data-cat="koupelny">Koupelny</button>
+  </div>
+
+  <div class="ref-grid gallery reveal" id="grid">
+    <a href="#" data-cat="koupelny"><img src="https://picsum.photos/seed/ginger-ref1/800/600" alt=""><div class="cap">Rekonstrukce koupelny<small>Cheb · 2025</small></div></a>
+    <a href="#" data-cat="topeni"><img src="https://picsum.photos/seed/ginger-ref2/800/600" alt=""><div class="cap">Výměna kotle<small>Sokolov · 2025</small></div></a>
+    <a href="#" data-cat="topeni"><img src="https://picsum.photos/seed/ginger-ref3/800/600" alt=""><div class="cap">Podlahové topení<small>Aš · 2025</small></div></a>
+    <a href="#" data-cat="voda"><img src="https://picsum.photos/seed/ginger-ref4/800/600" alt=""><div class="cap">Rozvody vody — novostavba<small>Karlovy Vary · 2024</small></div></a>
+    <a href="#" data-cat="koupelny"><img src="https://picsum.photos/seed/ginger-ref5/800/600" alt=""><div class="cap">Sprchový kout walk-in<small>Cheb · 2024</small></div></a>
+    <a href="#" data-cat="kanal"><img src="https://picsum.photos/seed/ginger-ref6/800/600" alt=""><div class="cap">Strojové čištění kanalizace<small>Mariánské Lázně · 2024</small></div></a>
+    <a href="#" data-cat="voda"><img src="https://picsum.photos/seed/ginger-ref7/800/600" alt=""><div class="cap">Domácí úpravna vody<small>Cheb · 2024</small></div></a>
+    <a href="#" data-cat="topeni"><img src="https://picsum.photos/seed/ginger-ref8/800/600" alt=""><div class="cap">Zónová regulace<small>Aš · 2024</small></div></a>
+    <a href="#" data-cat="koupelny"><img src="https://picsum.photos/seed/ginger-ref9/800/600" alt=""><div class="cap">Závěsné WC podomítkové<small>Planá · 2023</small></div></a>
+    <a href="#" data-cat="kanal"><img src="https://picsum.photos/seed/ginger-ref10/800/600" alt=""><div class="cap">Kompletní rozvody odpadů<small>Sokolov · 2023</small></div></a>
+    <a href="#" data-cat="voda"><img src="https://picsum.photos/seed/ginger-ref11/800/600" alt=""><div class="cap">Automatické zavlažování zahrady<small>Cheb · 2023</small></div></a>
+    <a href="#" data-cat="topeni"><img src="https://picsum.photos/seed/ginger-ref12/800/600" alt=""><div class="cap">Rekonstrukce otopné soustavy<small>Karlovy Vary · 2023</small></div></a>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="cta-strip reveal">
+    <div>
+      <h3>Líbí se vám naše práce?</h3>
+      <p>Domluvme schůzku a probereme, co můžeme udělat pro vás.</p>
+    </div>
+    <a href="/demos/instalater/kontakt" class="btn btn-white">Kontaktovat</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="/demos/instalater/" class="brand">
+          <img src="/demos/instalater/assets/logo.webp" alt="Ginger Instal">
+          <div class="name" style="color:#fff">Ginger Instal<small style="color:#7a6d5e">Cheb · Karlovarský kraj</small></div>
+        </a>
+        <p>Řemeslně poctivé instalatérské služby. Voda, topení, kanalizace v celém Karlovarském kraji.</p>
+      </div>
+      <div><h5>Služby</h5><ul><li><a href="/demos/instalater/sluzby#voda">Voda</a></li><li><a href="/demos/instalater/sluzby#topeni">Topení</a></li><li><a href="/demos/instalater/sluzby#kanalizace">Kanalizace</a></li><li><a href="/demos/instalater/reference">Reference</a></li></ul></div>
+      <div><h5>Kontakt</h5><ul><li><a href="tel:+420725745882">+420 725 745 882</a></li><li><a href="mailto:zkorodovanej.instalater@gmail.com">E-mail</a></li><li>Cheb, Karlovarský kraj</li><li>Po–Pá 7:00–17:00</li></ul></div>
+      <div><h5>Firma</h5><ul><li>Ginger Instal s.r.o.</li><li>Petr Hasoň</li><li>IČ: 24571041</li><li>DIČ: CZ24571041</li></ul></div>
+    </div>
+    <div class="foot-bottom"><div>© 2026 Ginger Instal s.r.o.</div><div>Design &amp; web · Tadeáš Ujváry</div></div>
+  </div>
+</footer>
+
+<script src="/demos/instalater/assets/app.js"></script>
+<script>
+  // Filter buttons
+  document.querySelectorAll('#tabs button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#tabs button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      document.querySelectorAll('#grid a').forEach(a=>{
+        a.style.display = (cat==='all' || a.dataset.cat===cat) ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>

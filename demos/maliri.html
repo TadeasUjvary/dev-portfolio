@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ekomplex CZ — Natěračství & Malířství</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700;1,9..144,900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            parch: '#F5EFE4',
+            'parch-deep': '#EDE5D5',
+            espresso: '#100E0B',
+            'espresso-2': '#1C1814',
+            rust: '#B84E1C',
+            'rust-hi': '#D45E26',
+            cream: '#EDE8DE',
+            muted: '#7A7268',
+          },
+          fontFamily: {
+            display: ['Fraunces', 'Georgia', 'serif'],
+            body: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: #F5EFE4; color: #100E0B; overflow-x: hidden; cursor: none; }
+
+    /* ── Fixed grain overlay ─────────────────────────── */
+    #grain {
+      position: fixed; inset: 0; z-index: 9000;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.045'/%3E%3C/svg%3E");
+      opacity: 1;
+    }
+
+    /* ── Custom cursor ───────────────────────────────── */
+    #cursor-dot, #cursor-ring {
+      position: fixed; top: 0; left: 0;
+      border-radius: 50%; pointer-events: none; z-index: 8999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+    }
+    #cursor-dot  { width: 6px; height: 6px; background: #B84E1C; }
+    #cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(184,78,28,0.45); transition: transform 0.15s cubic-bezier(0.32,0.72,0,1), width 0.3s, height 0.3s; }
+    body.cursor-hover #cursor-ring { width: 52px; height: 52px; border-color: rgba(184,78,28,0.7); }
+
+    /* ── Floating pill nav ───────────────────────────── */
+    #navbar {
+      position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+      z-index: 500; width: calc(100% - 48px); max-width: 1180px;
+    }
+    .nav-pill {
+      background: rgba(16,14,11,0.82);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-radius: 9999px;
+      border: 1px solid rgba(237,232,222,0.1);
+      padding: 12px 20px 12px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 4px 32px rgba(16,14,11,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    /* ── Mobile nav overlay ──────────────────────────── */
+    #nav-overlay {
+      position: fixed; inset: 0; z-index: 400;
+      background: rgba(16,14,11,0.96);
+      backdrop-filter: blur(24px);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.5s cubic-bezier(0.32,0.72,0,1);
+    }
+    #nav-overlay.open { opacity: 1; pointer-events: all; }
+    .nav-link-item {
+      opacity: 0; transform: translateY(48px);
+      transition: opacity 0.6s cubic-bezier(0.32,0.72,0,1), transform 0.6s cubic-bezier(0.32,0.72,0,1);
+    }
+    #nav-overlay.open .nav-link-item { opacity: 1; transform: translateY(0); }
+
+    /* ── Hero ────────────────────────────────────────── */
+    .hero { min-height: 100dvh; background: #100E0B; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+
+    .hero-display {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(76px, 13vw, 200px);
+      font-weight: 900;
+      line-height: 0.88;
+      letter-spacing: -0.025em;
+      color: #EDE8DE;
+      text-transform: uppercase;
+    }
+    .hero-display em {
+      font-style: italic;
+      color: #B84E1C;
+      font-weight: 300;
+    }
+
+    /* Ghost big text behind */
+    .hero-ghost {
+      position: absolute; bottom: -6%; right: -2%;
+      font-family: 'Fraunces', serif;
+      font-size: clamp(200px, 35vw, 560px);
+      font-weight: 900;
+      line-height: 0.8;
+      color: rgba(255,255,255,0.025);
+      pointer-events: none; user-select: none;
+      letter-spacing: -0.04em;
+    }
+
+    /* ── Ticker ──────────────────────────────────────── */
+    .ticker-wrap { background: #B84E1C; overflow: hidden; white-space: nowrap; padding: 13px 0; }
+    .ticker-inner { display: inline-flex; gap: 0; animation: tick 30s linear infinite; }
+    .ticker-inner span { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #F5EFE4; padding: 0 28px; }
+    .ticker-inner span::after { content: '·'; margin-left: 28px; opacity: 0.5; }
+    @keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── Double-bezel card shell ─────────────────────── */
+    .bezel-outer {
+      background: rgba(237,232,222,0.06);
+      border: 1px solid rgba(237,232,222,0.1);
+      padding: 2px;
+      border-radius: 20px;
+    }
+    .bezel-inner {
+      background: #1C1814;
+      border-radius: calc(20px - 2px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+
+    .bezel-outer-light {
+      background: rgba(16,14,11,0.05);
+      border: 1px solid rgba(16,14,11,0.08);
+      padding: 2px;
+      border-radius: 20px;
+    }
+    .bezel-inner-light {
+      background: #F5EFE4;
+      border-radius: calc(20px - 2px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+      overflow: hidden;
+    }
+
+    /* ── Bento service grid ──────────────────────────── */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: minmax(0, auto);
+      gap: 12px;
+    }
+    .bento-a { grid-column: span 7; }
+    .bento-b { grid-column: span 5; }
+    .bento-c { grid-column: span 5; }
+    .bento-d { grid-column: span 7; }
+
+    @media (max-width: 768px) {
+      .bento-a, .bento-b, .bento-c, .bento-d { grid-column: span 12; }
+    }
+
+    /* ── Service number ──────────────────────────────── */
+    .svc-num {
+      font-family: 'Fraunces', serif;
+      font-size: 100px;
+      font-weight: 900;
+      line-height: 1;
+      color: rgba(237,232,222,0.06);
+    }
+
+    /* ── Pill tag / eyebrow ──────────────────────────── */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(184,78,28,0.15);
+      border: 1px solid rgba(184,78,28,0.3);
+      border-radius: 9999px;
+      padding: 5px 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: #D45E26;
+    }
+    .eyebrow-light {
+      background: rgba(184,78,28,0.1);
+      border-color: rgba(184,78,28,0.25);
+      color: #B84E1C;
+    }
+
+    /* ── CTA buttons ─────────────────────────────────── */
+    .btn-rust {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #B84E1C;
+      border-radius: 9999px;
+      padding: 14px 14px 14px 24px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; font-weight: 600;
+      color: #F5EFE4;
+      text-decoration: none; border: none; cursor: none;
+      transition: background 0.4s cubic-bezier(0.32,0.72,0,1), transform 0.2s cubic-bezier(0.32,0.72,0,1);
+    }
+    .btn-rust:hover { background: #D45E26; }
+    .btn-rust:active { transform: scale(0.98); }
+    .btn-rust .icon-wrap {
+      width: 34px; height: 34px; border-radius: 9999px;
+      background: rgba(245,239,228,0.15);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.4s cubic-bezier(0.32,0.72,0,1);
+    }
+    .btn-rust:hover .icon-wrap { transform: translate(2px, -2px) scale(1.05); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: transparent;
+      border: 1px solid rgba(237,232,222,0.25);
+      border-radius: 9999px;
+      padding: 14px 14px 14px 24px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; font-weight: 600;
+      color: #EDE8DE;
+      text-decoration: none; cursor: none;
+      transition: border-color 0.4s cubic-bezier(0.32,0.72,0,1), color 0.4s;
+    }
+    .btn-ghost:hover { border-color: rgba(184,78,28,0.6); color: #D45E26; }
+    .btn-ghost .icon-wrap {
+      width: 34px; height: 34px; border-radius: 9999px;
+      background: rgba(237,232,222,0.1);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.4s cubic-bezier(0.32,0.72,0,1);
+    }
+    .btn-ghost:hover .icon-wrap { transform: translate(2px, -2px); }
+
+    /* ── Testimonial Z-card ──────────────────────────── */
+    .tcard {
+      background: #1C1814;
+      border: 1px solid rgba(237,232,222,0.08);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+      position: relative; overflow: hidden;
+    }
+
+    /* ── Process step ────────────────────────────────── */
+    .process-step { display: flex; gap: 28px; padding: 32px 0; border-bottom: 1px solid rgba(16,14,11,0.08); }
+    .process-step:last-child { border-bottom: none; }
+
+    /* ── Form ────────────────────────────────────────── */
+    .field-wrap { position: relative; }
+    .field-input {
+      width: 100%;
+      background: rgba(245,239,228,0.05);
+      border: 1px solid rgba(237,232,222,0.12);
+      border-radius: 12px;
+      padding: 15px 18px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; color: #EDE8DE;
+      outline: none;
+      transition: border-color 0.4s cubic-bezier(0.32,0.72,0,1), background 0.4s;
+      resize: none;
+    }
+    .field-input::placeholder { color: rgba(237,232,222,0.3); }
+    .field-input:focus { border-color: rgba(184,78,28,0.6); background: rgba(245,239,228,0.07); }
+    .field-label {
+      display: block; margin-bottom: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(237,232,222,0.4);
+    }
+
+    /* ── Scroll reveal ───────────────────────────────── */
+    .sr { opacity: 0; transform: translateY(40px); filter: blur(4px); will-change: transform, opacity; }
+    .sr.revealed { opacity: 1; transform: translateY(0); filter: blur(0); transition: opacity 0.9s cubic-bezier(0.32,0.72,0,1), transform 0.9s cubic-bezier(0.32,0.72,0,1), filter 0.9s cubic-bezier(0.32,0.72,0,1); }
+    .sr-left { opacity: 0; transform: translateX(-48px); filter: blur(4px); will-change: transform, opacity; }
+    .sr-left.revealed { opacity: 1; transform: translateX(0); filter: blur(0); transition: opacity 0.9s cubic-bezier(0.32,0.72,0,1), transform 0.9s cubic-bezier(0.32,0.72,0,1), filter 0.9s; }
+    .sr-right { opacity: 0; transform: translateX(48px); filter: blur(4px); will-change: transform, opacity; }
+    .sr-right.revealed { opacity: 1; transform: translateX(0); filter: blur(0); transition: opacity 0.9s cubic-bezier(0.32,0.72,0,1), transform 0.9s cubic-bezier(0.32,0.72,0,1), filter 0.9s; }
+
+    /* ── Hamburger morph ─────────────────────────────── */
+    .hbg-line {
+      display: block; width: 22px; height: 1.5px;
+      background: #EDE8DE; border-radius: 2px;
+      transform-origin: center;
+      transition: transform 0.4s cubic-bezier(0.32,0.72,0,1), opacity 0.3s;
+      position: absolute; left: 50%; top: 50%;
+    }
+    .hbg-line-1 { transform: translate(-50%, calc(-50% - 7px)); }
+    .hbg-line-2 { transform: translate(-50%, -50%); }
+    .hbg-line-3 { transform: translate(-50%, calc(-50% + 7px)); }
+    .open .hbg-line-1 { transform: translate(-50%, -50%) rotate(45deg); }
+    .open .hbg-line-2 { opacity: 0; transform: translate(-50%, -50%) scaleX(0); }
+    .open .hbg-line-3 { transform: translate(-50%, -50%) rotate(-45deg); }
+
+    @media (max-width: 640px) {
+      .hero-display { font-size: clamp(56px, 16vw, 90px); }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Grain overlay -->
+<div id="grain"></div>
+
+<!-- Custom cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- ════════════════════════════════════════════════════
+     FLOATING PILL NAV
+     ════════════════════════════════════════════════════ -->
+<nav id="navbar" x-data="{ open: false }">
+  <div class="nav-pill">
+
+    <!-- Logo -->
+    <a href="#" style="cursor:none; text-decoration:none; display:flex; align-items:center; gap:12px;">
+      <div style="width:32px;height:32px;background:#B84E1C;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 3h10v2H3zM3 7h7v2H3zM3 11h5v2H3z" fill="#F5EFE4"/>
+        </svg>
+      </div>
+      <div>
+        <div style="font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:#EDE8DE;line-height:1;letter-spacing:-0.01em;">Ekomplex CZ</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:9px;color:rgba(237,232,222,0.4);letter-spacing:0.2em;text-transform:uppercase;margin-top:2px;">Natěračství · Malířství</div>
+      </div>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-6">
+      <a href="#sluzby" style="cursor:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:500;color:rgba(237,232,222,0.6);text-decoration:none;letter-spacing:0.04em;transition:color 0.3s;" onmouseover="this.style.color='#EDE8DE'" onmouseout="this.style.color='rgba(237,232,222,0.6)'">Služby</a>
+      <a href="#o-nas" style="cursor:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:500;color:rgba(237,232,222,0.6);text-decoration:none;letter-spacing:0.04em;transition:color 0.3s;" onmouseover="this.style.color='#EDE8DE'" onmouseout="this.style.color='rgba(237,232,222,0.6)'">O nás</a>
+      <a href="#reference" style="cursor:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:500;color:rgba(237,232,222,0.6);text-decoration:none;letter-spacing:0.04em;transition:color 0.3s;" onmouseover="this.style.color='#EDE8DE'" onmouseout="this.style.color='rgba(237,232,222,0.6)'">Reference</a>
+      <a href="#kontakt" class="btn-rust" style="padding:10px 10px 10px 18px;font-size:13px;">
+        Poptávka
+        <span class="icon-wrap" style="width:28px;height:28px;">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M7 2.5l4 4-4 4" stroke="#F5EFE4" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+    </div>
+
+    <!-- Hamburger (mobile) -->
+    <button @click="open=!open; document.getElementById('nav-overlay').classList.toggle('open')"
+      class="md:hidden relative"
+      :class="{ 'open': open }"
+      id="hbg-btn"
+      style="cursor:none;width:40px;height:40px;background:rgba(237,232,222,0.08);border-radius:50%;border:none;position:relative;flex-shrink:0;">
+      <span class="hbg-line hbg-line-1"></span>
+      <span class="hbg-line hbg-line-2"></span>
+      <span class="hbg-line hbg-line-3"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav Overlay -->
+<div id="nav-overlay">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;">
+    <a href="#sluzby" onclick="closeMenu()" class="nav-link-item" style="transition-delay:0.08s;cursor:none;font-family:'Fraunces',serif;font-size:52px;font-weight:700;color:#EDE8DE;text-decoration:none;letter-spacing:-0.02em;line-height:1.1;">Služby</a>
+    <a href="#o-nas" onclick="closeMenu()" class="nav-link-item" style="transition-delay:0.14s;cursor:none;font-family:'Fraunces',serif;font-size:52px;font-weight:700;color:#EDE8DE;text-decoration:none;letter-spacing:-0.02em;line-height:1.1;">O nás</a>
+    <a href="#reference" onclick="closeMenu()" class="nav-link-item" style="transition-delay:0.20s;cursor:none;font-family:'Fraunces',serif;font-size:52px;font-weight:700;color:#EDE8DE;text-decoration:none;letter-spacing:-0.02em;line-height:1.1;">Reference</a>
+    <a href="#kontakt" onclick="closeMenu()" class="nav-link-item" style="transition-delay:0.26s;cursor:none;font-family:'Fraunces',serif;font-size:52px;font-weight:700;color:#B84E1C;text-decoration:none;letter-spacing:-0.02em;line-height:1.1;">Kontakt</a>
+  </div>
+  <div class="nav-link-item" style="transition-delay:0.34s;margin-top:48px;display:flex;flex-direction:column;align-items:center;gap:6px;">
+    <a href="tel:840840600" style="cursor:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;color:rgba(237,232,222,0.5);text-decoration:none;">840 840 600</a>
+    <a href="mailto:poptavky@ekomplex.cz" style="cursor:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:rgba(237,232,222,0.3);text-decoration:none;">poptavky@ekomplex.cz</a>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     HERO
+     ════════════════════════════════════════════════════ -->
+<section class="hero" id="top">
+
+  <!-- Vertical lines grid -->
+  <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;">
+    <div style="position:absolute;top:0;left:25%;width:1px;height:100%;background:rgba(255,255,255,0.03);"></div>
+    <div style="position:absolute;top:0;left:50%;width:1px;height:100%;background:rgba(255,255,255,0.03);"></div>
+    <div style="position:absolute;top:0;left:75%;width:1px;height:100%;background:rgba(255,255,255,0.03);"></div>
+    <!-- Rust horizontal accent line -->
+    <div style="position:absolute;top:50%;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(184,78,28,0.15) 30%,rgba(184,78,28,0.15) 70%,transparent 100%);"></div>
+  </div>
+
+  <!-- Ghost watermark -->
+  <div class="hero-ghost">CZ</div>
+
+  <!-- Content -->
+  <div style="position:relative;z-index:10;padding: 0 24px 56px; max-width:1440px; margin:0 auto; width:100%;" class="md:px-16 md:pb-20">
+
+    <!-- Status badge -->
+    <div id="hero-badge" style="opacity:0;transform:translateY(20px);" class="mb-8">
+      <span class="eyebrow">
+        <span style="width:6px;height:6px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite;"></span>
+        Online poptávky 24 / 7 · Celá ČR
+      </span>
+    </div>
+
+    <!-- Main heading -->
+    <div id="hero-title" style="opacity:0;transform:translateY(40px);">
+      <h1 class="hero-display">
+        Natěrači<br>
+        <em>&amp;&nbsp;Malíři</em>
+      </h1>
+    </div>
+
+    <!-- Subtext + CTAs row -->
+    <div id="hero-sub" style="opacity:0;transform:translateY(30px);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:32px;margin-top:32px;">
+      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:300;color:rgba(237,232,222,0.55);max-width:420px;line-height:1.7;">
+        Profesionální nátěry a malování bytů, domů, fasád a průmyslových objektů.<br>
+        <span style="font-family:'Fraunces',serif;font-style:italic;font-size:18px;color:rgba(237,232,222,0.7);">Vždy s plnou zárukou.</span>
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+        <a href="#kontakt" class="btn-rust">
+          Nezávazná poptávka
+          <span class="icon-wrap">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5h10M8 3.5l4 4-4 4" stroke="#F5EFE4" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+        <a href="tel:840840600" class="btn-ghost">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3 2.5h3l1.5 3.5-2 1.5a9 9 0 004 4l1.5-2 3.5 1.5v3c0 .6-.4 1-1 1C5 15 0 10 0 3.5c0-.6.4-1 1-1L3 2.5z" fill="rgba(237,232,222,0.6)"/></svg>
+          840 840 600
+          <span class="icon-wrap">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M7 2.5l4 4-4 4" stroke="#EDE8DE" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Info strip -->
+    <div id="hero-strip" style="opacity:0;transform:translateY(20px);display:flex;flex-wrap:wrap;gap:24px;margin-top:48px;padding-top:28px;border-top:1px solid rgba(237,232,222,0.08);">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="width:6px;height:6px;background:#4ade80;border-radius:50%;"></span>
+        <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:rgba(237,232,222,0.4);">Online poptávky 24/7</span>
+      </div>
+      <span style="color:rgba(237,232,222,0.15);font-size:12px;">·</span>
+      <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:rgba(237,232,222,0.4);">Po–Pá 7:30–16:00</span>
+      <span style="color:rgba(237,232,222,0.15);font-size:12px;">·</span>
+      <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:rgba(237,232,222,0.4);">Opava · Ostrava · Celá ČR</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- Ticker -->
+<div class="ticker-wrap">
+  <div class="ticker-inner" aria-hidden="true">
+    <span>Rychle</span><span>Kvalitně</span><span>Se zárukou</span>
+    <span>Malování pokojů</span><span>Nátěry fasád</span><span>Tapetování</span>
+    <span>Protipožární nátěry</span><span>Celá Česká republika</span>
+    <span>Natěračství</span><span>Malířství</span><span>Průmyslové objekty</span>
+    <span>Rychle</span><span>Kvalitně</span><span>Se zárukou</span>
+    <span>Malování pokojů</span><span>Nátěry fasád</span><span>Tapetování</span>
+    <span>Protipožární nátěry</span><span>Celá Česká republika</span>
+    <span>Natěračství</span><span>Malířství</span><span>Průmyslové objekty</span>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     SERVICES — BENTO GRID
+     ════════════════════════════════════════════════════ -->
+<section id="sluzby" style="background:#F5EFE4;padding:120px 24px;" class="md:px-16">
+  <div style="max-width:1280px;margin:0 auto;">
+
+    <!-- Section header -->
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:56px;" class="sr">
+      <span class="eyebrow eyebrow-light">— Naše služby</span>
+      <h2 style="font-family:'Fraunces',serif;font-size:clamp(52px,8vw,96px);font-weight:900;line-height:0.9;letter-spacing:-0.03em;color:#100E0B;text-transform:uppercase;">
+        Co<br><em style="font-style:italic;font-weight:300;color:#B84E1C;">umíme</em>
+      </h2>
+    </div>
+
+    <div class="bento-grid">
+
+      <!-- Card A: Natěračství (large) -->
+      <div class="bento-a sr">
+        <div class="bezel-outer" style="height:100%;border-radius:24px;">
+          <div class="bezel-inner" style="border-radius:22px;padding:44px 44px 36px;height:100%;display:flex;flex-direction:column;justify-content:space-between;min-height:320px;">
+            <div>
+              <div class="svc-num" style="margin-bottom:8px;">01</div>
+              <h3 style="font-family:'Fraunces',serif;font-size:42px;font-weight:700;color:#EDE8DE;letter-spacing:-0.02em;line-height:1;margin-bottom:16px;">Natěračství</h3>
+              <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:300;color:rgba(237,232,222,0.55);line-height:1.7;max-width:480px;">
+                Kvalifikované nátěry stavebních i průmyslových konstrukcí. Ocelové a dřevěné prvky, střechy, fasády, průmyslové podlahy, protipožární a protiplísňové povrchové úpravy — vše s použitím výhradně značkových materiálů.
+              </p>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;">
+              <span style="background:rgba(184,78,28,0.2);border:1px solid rgba(184,78,28,0.3);border-radius:9999px;padding:4px 14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:500;color:#D45E26;">Ocelové konstrukce</span>
+              <span style="background:rgba(237,232,222,0.07);border:1px solid rgba(237,232,222,0.1);border-radius:9999px;padding:4px 14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:500;color:rgba(237,232,222,0.5);">Střechy &amp; fasády</span>
+              <span style="background:rgba(237,232,222,0.07);border:1px solid rgba(237,232,222,0.1);border-radius:9999px;padding:4px 14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:500;color:rgba(237,232,222,0.5);">Průmyslové podlahy</span>
+              <span style="background:rgba(237,232,222,0.07);border:1px solid rgba(237,232,222,0.1);border-radius:9999px;padding:4px 14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:500;color:rgba(237,232,222,0.5);">Protipožární</span>
+              <span style="background:rgba(237,232,222,0.07);border:1px solid rgba(237,232,222,0.1);border-radius:9999px;padding:4px 14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:500;color:rgba(237,232,222,0.5);">Protiplísňové</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card B: Malířství -->
+      <div class="bento-b sr" style="transition-delay:0.1s">
+        <div class="bezel-outer" style="height:100%;border-radius:24px;background:rgba(184,78,28,0.12);border-color:rgba(184,78,28,0.25);">
+          <div class="bezel-inner" style="border-radius:22px;background:#2A1208;padding:44px 36px 36px;height:100%;display:flex;flex-direction:column;justify-content:space-between;min-height:320px;">
+            <div>
+              <div class="svc-num" style="color:rgba(184,78,28,0.15);margin-bottom:8px;">02</div>
+              <h3 style="font-family:'Fraunces',serif;font-size:38px;font-weight:700;color:#EDE8DE;letter-spacing:-0.02em;line-height:1;margin-bottom:16px;">Malířství</h3>
+              <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:300;color:rgba(237,232,222,0.55);line-height:1.7;">
+                Kompletní vymalování bytů, rodinných domů i komerčních prostor. Příprava podkladu, vyrovnání stěn, stěrkování, odstraňování starých nátěrů i sádrové omítky.
+              </p>
+            </div>
+            <ul style="margin-top:24px;display:flex;flex-direction:column;gap:8px;">
+              <li style="display:flex;align-items:center;gap:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:rgba(237,232,222,0.6);">
+                <span style="width:5px;height:5px;background:#B84E1C;border-radius:50%;flex-shrink:0;"></span>Byty &amp; rodinné domy
+              </li>
+              <li style="display:flex;align-items:center;gap:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:rgba(237,232,222,0.6);">
+                <span style="width:5px;height:5px;background:#B84E1C;border-radius:50%;flex-shrink:0;"></span>Kancelářské prostory
+              </li>
+              <li style="display:flex;align-items:center;gap:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:rgba(237,232,222,0.6);">
+                <span style="width:5px;height:5px;background:#B84E1C;border-radius:50%;flex-shrink:0;"></span>Stropy &amp; nivelace stěn
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card C: Tapetování -->
+      <div class="bento-c sr" style="transition-delay:0.15s">
+        <div class="bezel-outer-light" style="height:100%;border-radius:24px;">
+          <div class="bezel-inner-light" style="border-radius:22px;padding:44px 36px 36px;height:100%;display:flex;flex-direction:column;justify-content:space-between;min-height:280px;">
+            <div>
+              <div style="font-family:'Fraunces',serif;font-size:80px;font-weight:900;line-height:1;color:rgba(16,14,11,0.06);margin-bottom:8px;">03</div>
+              <h3 style="font-family:'Fraunces',serif;font-size:36px;font-weight:700;color:#100E0B;letter-spacing:-0.02em;line-height:1;margin-bottom:14px;">Tapetování</h3>
+              <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:300;color:#7A7268;line-height:1.7;">
+                Od poradenství při výběru po finální provedení. Strhávání starých tapet, nivelace podkladu, lepení všech typů tapet včetně dekorativních bordur.
+              </p>
+            </div>
+            <a href="#kontakt" style="cursor:none;display:inline-flex;align-items:center;gap:8px;margin-top:28px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:#B84E1C;text-decoration:none;letter-spacing:0.02em;transition:gap 0.3s;" onmouseover="this.style.gap='14px'" onmouseout="this.style.gap='8px'">
+              Poptat tapetování
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 3l4 4-4 4" stroke="#B84E1C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card D: CTA wide -->
+      <div class="bento-d sr" style="transition-delay:0.2s">
+        <div style="background:#B84E1C;border-radius:24px;padding:44px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;overflow:hidden;position:relative;min-height:160px;">
+          <div style="position:absolute;right:-40px;bottom:-20px;font-family:'Fraunces',serif;font-size:220px;font-weight:900;color:rgba(245,239,228,0.08);line-height:1;pointer-events:none;user-select:none;">CZ</div>
+          <div style="position:relative;z-index:1;">
+            <div style="font-family:'Fraunces',serif;font-size:clamp(26px,3.5vw,38px);font-weight:700;color:#F5EFE4;letter-spacing:-0.02em;line-height:1.1;">Poptejte práci ještě dnes</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:300;color:rgba(245,239,228,0.7);margin-top:8px;">Odpovíme do 24 hodin. Cenová nabídka zdarma.</div>
+          </div>
+          <a href="#kontakt" style="cursor:none;position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;background:#F5EFE4;color:#B84E1C;border-radius:9999px;padding:14px 14px 14px 24px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-decoration:none;flex-shrink:0;transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+            Nezávazná poptávka
+            <span style="width:32px;height:32px;background:rgba(184,78,28,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M7 2.5l4 4-4 4" stroke="#B84E1C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+     O NÁS / STATS
+     ════════════════════════════════════════════════════ -->
+<section id="o-nas" style="background:#100E0B;padding:120px 24px;" class="md:px-16">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="md:gap-20" id="onas-grid">
+
+    <!-- Left -->
+    <div class="sr-left">
+      <span class="eyebrow" style="margin-bottom:24px;display:inline-flex;">— Kdo jsme</span>
+      <h2 style="font-family:'Fraunces',serif;font-size:clamp(46px,7vw,80px);font-weight:900;line-height:0.92;letter-spacing:-0.03em;color:#EDE8DE;text-transform:uppercase;margin-bottom:32px;">
+        Řeme-<br>slníci<br><em style="font-style:italic;font-weight:300;color:#B84E1C;">na slovo<br>vzatí</em>
+      </h2>
+      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:300;color:rgba(237,232,222,0.55);line-height:1.8;margin-bottom:16px;max-width:460px;">
+        Jsme Natěračství a malířství Ekomplex CZ — firma, která staví na poctivé řemeslné práci a férovém jednání. Chceme, aby se zákazníci vraceli a doporučovali nás dál.
+      </p>
+      <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:300;color:rgba(237,232,222,0.55);line-height:1.8;max-width:460px;">
+        Pracujeme po celé České republice. Naši specialisté jsou proškolení a používají výhradně značkové materiály od ověřených výrobců.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;">
+        <div style="display:flex;align-items:center;gap:8px;background:rgba(237,232,222,0.06);border:1px solid rgba(237,232,222,0.1);border-radius:9999px;padding:8px 16px;">
+          <span style="width:6px;height:6px;background:#B84E1C;border-radius:50%;"></span>
+          <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:rgba(237,232,222,0.6);">Proškolení specialisté</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;background:rgba(237,232,222,0.06);border:1px solid rgba(237,232,222,0.1);border-radius:9999px;padding:8px 16px;">
+          <span style="width:6px;height:6px;background:#B84E1C;border-radius:50%;"></span>
+          <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:rgba(237,232,222,0.6);">Značkové materiály</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;background:rgba(237,232,222,0.06);border:1px solid rgba(237,232,222,0.1);border-radius:9999px;padding:8px 16px;">
+          <span style="width:6px;height:6px;background:#B84E1C;border-radius:50%;"></span>
+          <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:rgba(237,232,222,0.6);">Plná záruka</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: stat grid -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="sr-right">
+
+      <div class="bezel-outer" style="border-radius:20px;">
+        <div class="bezel-inner" style="border-radius:18px;padding:32px 28px;">
+          <div style="font-family:'Fraunces',serif;font-size:clamp(52px,6vw,80px);font-weight:900;color:#B84E1C;line-height:1;letter-spacing:-0.03em;">100+</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(237,232,222,0.4);margin-top:8px;">Dokončených<br>projektů</div>
+        </div>
+      </div>
+
+      <div class="bezel-outer" style="border-radius:20px;background:rgba(184,78,28,0.1);border-color:rgba(184,78,28,0.2);">
+        <div class="bezel-inner" style="border-radius:18px;background:#2A1208;padding:32px 28px;">
+          <div style="font-family:'Fraunces',serif;font-size:clamp(52px,6vw,80px);font-weight:900;color:#EDE8DE;line-height:1;letter-spacing:-0.03em;">24/7</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(237,232,222,0.4);margin-top:8px;">Online<br>poptávky</div>
+        </div>
+      </div>
+
+      <div class="bezel-outer" style="border-radius:20px;">
+        <div class="bezel-inner" style="border-radius:18px;padding:32px 28px;">
+          <div style="font-family:'Fraunces',serif;font-size:clamp(32px,4vw,52px);font-weight:900;color:#B84E1C;line-height:1;letter-spacing:-0.03em;">Celá ČR</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(237,232,222,0.4);margin-top:8px;">Pokrytá<br>oblast</div>
+        </div>
+      </div>
+
+      <div class="bezel-outer" style="border-radius:20px;">
+        <div class="bezel-inner" style="border-radius:18px;padding:32px 28px;">
+          <div style="font-family:'Fraunces',serif;font-size:clamp(52px,6vw,80px);font-weight:900;color:#EDE8DE;line-height:1;letter-spacing:-0.03em;">100%</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(237,232,222,0.4);margin-top:8px;">Plná<br>záruka</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+     JAK PRACUJEME
+     ════════════════════════════════════════════════════ -->
+<section style="background:#EDE5D5;padding:120px 24px;" class="md:px-16">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start;" id="process-grid">
+
+    <!-- Left sticky heading -->
+    <div class="sr-left" style="position:sticky;top:100px;">
+      <span class="eyebrow eyebrow-light" style="margin-bottom:20px;display:inline-flex;">— Postup</span>
+      <h2 style="font-family:'Fraunces',serif;font-size:clamp(46px,6vw,72px);font-weight:900;line-height:0.92;letter-spacing:-0.03em;color:#100E0B;text-transform:uppercase;">
+        Jak<br>praco-<br><em style="font-style:italic;font-weight:300;color:#B84E1C;">ujeme</em>
+      </h2>
+    </div>
+
+    <!-- Steps -->
+    <div>
+      <div class="process-step sr">
+        <div style="font-family:'Fraunces',serif;font-size:48px;font-weight:900;color:#B84E1C;line-height:1;min-width:64px;flex-shrink:0;">01</div>
+        <div>
+          <h3 style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:#100E0B;letter-spacing:-0.01em;margin-bottom:10px;">Poptávka &amp; prohlídka</h3>
+          <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:300;color:#7A7268;line-height:1.75;">Kontaktujte nás — telefonicky, e-mailem nebo přes online formulář. Domluvíme si prohlídku místa a připravíme nezávaznou nabídku.</p>
+        </div>
+      </div>
+      <div class="process-step sr" style="transition-delay:0.1s">
+        <div style="font-family:'Fraunces',serif;font-size:48px;font-weight:900;color:#B84E1C;line-height:1;min-width:64px;flex-shrink:0;">02</div>
+        <div>
+          <h3 style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:#100E0B;letter-spacing:-0.01em;margin-bottom:10px;">Cenová nabídka</h3>
+          <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:300;color:#7A7268;line-height:1.75;">Na základě prohlídky dostanete přesnou cenovou nabídku bez skrytých poplatků — vše jasně a transparentně.</p>
+        </div>
+      </div>
+      <div class="process-step sr" style="transition-delay:0.2s">
+        <div style="font-family:'Fraunces',serif;font-size:48px;font-weight:900;color:#B84E1C;line-height:1;min-width:64px;flex-shrink:0;">03</div>
+        <div>
+          <h3 style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:#100E0B;letter-spacing:-0.01em;margin-bottom:10px;">Realizace</h3>
+          <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:300;color:#7A7268;line-height:1.75;">Přijedeme přesně v domluvený čas. Pracujeme rychle, čistě a pečlivě. Výhradně značkové barvy a materiály.</p>
+        </div>
+      </div>
+      <div class="process-step sr" style="transition-delay:0.3s">
+        <div style="font-family:'Fraunces',serif;font-size:48px;font-weight:900;color:#B84E1C;line-height:1;min-width:64px;flex-shrink:0;">04</div>
+        <div>
+          <h3 style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:#100E0B;letter-spacing:-0.01em;margin-bottom:10px;">Předání s zárukou</h3>
+          <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:300;color:#7A7268;line-height:1.75;">Po dokončení práci předáme a poskytneme plnou záruku. Vaše spokojenost je pro nás priorita číslo jedna.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+     REFERENCE / TESTIMONIALS
+     ════════════════════════════════════════════════════ -->
+<section id="reference" style="background:#100E0B;padding:120px 24px;" class="md:px-16">
+  <div style="max-width:1280px;margin:0 auto;">
+
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:64px;" class="sr">
+      <span class="eyebrow">— Reference</span>
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;">
+        <h2 style="font-family:'Fraunces',serif;font-size:clamp(48px,8vw,88px);font-weight:900;line-height:0.9;letter-spacing:-0.03em;color:#EDE8DE;text-transform:uppercase;">
+          Co říkají<br><em style="font-style:italic;font-weight:300;color:#B84E1C;">zákazníci</em>
+        </h2>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:300;color:rgba(237,232,222,0.4);max-width:280px;line-height:1.7;">Stovky spokojených zákazníků z celé republiky. Každý projekt — velký i malý — s tou samou pečlivostí.</p>
+      </div>
+    </div>
+
+    <!-- Testimonial grid -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;" id="tgrid">
+
+      <div class="tcard sr" style="transition-delay:0s">
+        <div style="font-family:'Fraunces',serif;font-size:64px;line-height:1;color:rgba(184,78,28,0.25);margin-bottom:16px;">&ldquo;</div>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:300;color:rgba(237,232,222,0.75);line-height:1.75;margin-bottom:24px;">Potřebovali jsme vymalovat byt před pronájmem a jsme fakt spokojení. Rychlá odezva, přesnost a čistá práce.</p>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:rgba(184,78,28,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:14px;color:#D45E26;flex-shrink:0;">M</div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:#EDE8DE;">Manželé Mourkovi</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:rgba(237,232,222,0.35);margin-top:2px;">Praha</div>
+          </div>
+          <div style="margin-left:auto;color:#D45E26;font-size:12px;letter-spacing:1px;">★★★★★</div>
+        </div>
+      </div>
+
+      <div class="tcard sr" style="transition-delay:0.08s">
+        <div style="font-family:'Fraunces',serif;font-size:64px;line-height:1;color:rgba(184,78,28,0.25);margin-bottom:16px;">&ldquo;</div>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:300;color:rgba(237,232,222,0.75);line-height:1.75;margin-bottom:24px;">Domluva na pohodu, přijeli přesně, jak řekli, a práce byla hotová za jeden den. Doporučuji.</p>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:rgba(184,78,28,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:14px;color:#D45E26;flex-shrink:0;">H</div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:#EDE8DE;">Martin Horák</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:rgba(237,232,222,0.35);margin-top:2px;">Loučka</div>
+          </div>
+          <div style="margin-left:auto;color:#D45E26;font-size:12px;letter-spacing:1px;">★★★★★</div>
+        </div>
+      </div>
+
+      <div class="tcard sr" style="transition-delay:0.16s">
+        <div style="font-family:'Fraunces',serif;font-size:64px;line-height:1;color:rgba(184,78,28,0.25);margin-bottom:16px;">&ldquo;</div>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:300;color:rgba(237,232,222,0.75);line-height:1.75;margin-bottom:24px;">Malování dětského pokoje dopadlo skvěle. Páni malíři byli rychlí a celkový výsledek předčil očekávání.</p>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:rgba(184,78,28,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:14px;color:#D45E26;flex-shrink:0;">D</div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:#EDE8DE;">Petra Dvořáková</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:rgba(237,232,222,0.35);margin-top:2px;">Brno</div>
+          </div>
+          <div style="margin-left:auto;color:#D45E26;font-size:12px;letter-spacing:1px;">★★★★★</div>
+        </div>
+      </div>
+
+      <div class="tcard sr" style="transition-delay:0.06s">
+        <div style="font-family:'Fraunces',serif;font-size:64px;line-height:1;color:rgba(184,78,28,0.25);margin-bottom:16px;">&ldquo;</div>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:300;color:rgba(237,232,222,0.75);line-height:1.75;margin-bottom:24px;">Vše proběhlo dle domluvy rychle a bez komplikací. Oceňuji přesnost a skutečně čistou práci.</p>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:rgba(184,78,28,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:14px;color:#D45E26;flex-shrink:0;">P</div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:#EDE8DE;">Kateřina Procházková</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:rgba(237,232,222,0.35);margin-top:2px;">Olomouc</div>
+          </div>
+          <div style="margin-left:auto;color:#D45E26;font-size:12px;letter-spacing:1px;">★★★★★</div>
+        </div>
+      </div>
+
+      <div class="tcard sr" style="transition-delay:0.12s">
+        <div style="font-family:'Fraunces',serif;font-size:64px;line-height:1;color:rgba(184,78,28,0.25);margin-bottom:16px;">&ldquo;</div>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:300;color:rgba(237,232,222,0.75);line-height:1.75;margin-bottom:24px;">Nátěr střechy proběhl naprosto bez problémů. Profesionální přístup od první domluvy až po předání.</p>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:rgba(184,78,28,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:14px;color:#D45E26;flex-shrink:0;">B</div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:#EDE8DE;">Kamila Bezděková</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:rgba(237,232,222,0.35);margin-top:2px;">Plzeň</div>
+          </div>
+          <div style="margin-left:auto;color:#D45E26;font-size:12px;letter-spacing:1px;">★★★★★</div>
+        </div>
+      </div>
+
+      <div class="tcard sr" style="transition-delay:0.2s">
+        <div style="font-family:'Fraunces',serif;font-size:64px;line-height:1;color:rgba(184,78,28,0.25);margin-bottom:16px;">&ldquo;</div>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:300;color:rgba(237,232,222,0.75);line-height:1.75;margin-bottom:24px;">Rychlovka před nastěhováním — vše klaplo na výbornou. Velmi milý přístup a pečlivě odvedená práce.</p>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:rgba(184,78,28,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:14px;color:#D45E26;flex-shrink:0;">N</div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:#EDE8DE;">Rodina Němcova</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:rgba(237,232,222,0.35);margin-top:2px;">Pardubice</div>
+          </div>
+          <div style="margin-left:auto;color:#D45E26;font-size:12px;letter-spacing:1px;">★★★★★</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+     KONTAKT
+     ════════════════════════════════════════════════════ -->
+<section id="kontakt" style="background:#F5EFE4;padding:120px 24px;" class="md:px-16">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;" id="contact-grid">
+
+    <!-- Left info -->
+    <div class="sr-left">
+      <span class="eyebrow eyebrow-light" style="margin-bottom:24px;display:inline-flex;">— Kontakt</span>
+      <h2 style="font-family:'Fraunces',serif;font-size:clamp(46px,7vw,80px);font-weight:900;line-height:0.9;letter-spacing:-0.03em;color:#100E0B;text-transform:uppercase;margin-bottom:48px;">
+        Rádi vám<br><em style="font-style:italic;font-weight:300;color:#B84E1C;">pomůžeme</em>
+      </h2>
+
+      <div style="display:flex;flex-direction:column;gap:24px;">
+
+        <div style="display:flex;align-items:flex-start;gap:16px;">
+          <div style="width:44px;height:44px;background:#100E0B;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 2.5h3.5l1.5 4-2 1.5a10 10 0 005 5l1.5-2 4 1.5v3.5c0 .5-.5 1-1 1C5 17 1 13 1 3.5c0-.5.5-1 1-1L3 2.5z" fill="#EDE8DE"/></svg>
+          </div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7A7268;margin-bottom:6px;">Telefon</div>
+            <a href="tel:840840600" style="cursor:none;font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:#100E0B;text-decoration:none;letter-spacing:-0.02em;display:block;line-height:1;transition:color 0.3s;" onmouseover="this.style.color='#B84E1C'" onmouseout="this.style.color='#100E0B'">840 840 600</a>
+            <a href="tel:+420605884791" style="cursor:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:#7A7268;text-decoration:none;margin-top:4px;display:block;transition:color 0.3s;" onmouseover="this.style.color='#B84E1C'" onmouseout="this.style.color='#7A7268'">+420 605 884 791</a>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:16px;">
+          <div style="width:44px;height:44px;background:#100E0B;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="1.5" stroke="#EDE8DE" stroke-width="1.5"/><path d="M2 7l7 3.5L16 7" stroke="#EDE8DE" stroke-width="1.5"/></svg>
+          </div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7A7268;margin-bottom:6px;">E-mail</div>
+            <a href="mailto:poptavky@ekomplex.cz" style="cursor:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;color:#100E0B;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#B84E1C'" onmouseout="this.style.color='#100E0B'">poptavky@ekomplex.cz</a>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:16px;">
+          <div style="width:44px;height:44px;background:#100E0B;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2C6.2 2 4 4.2 4 7c0 4 5 9 5 9s5-5 5-9c0-2.8-2.2-5-5-5z" stroke="#EDE8DE" stroke-width="1.5"/><circle cx="9" cy="7" r="2" stroke="#EDE8DE" stroke-width="1.5"/></svg>
+          </div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7A7268;margin-bottom:6px;">Adresa</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;color:#100E0B;line-height:1.5;">Těšínská 2158/61<br>746 01 Opava</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:16px;">
+          <div style="width:44px;height:44px;background:#100E0B;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="#EDE8DE" stroke-width="1.5"/><path d="M9 5v4l3 2" stroke="#EDE8DE" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7A7268;margin-bottom:6px;">Provozní doba</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;color:#100E0B;line-height:1.5;">Po–Pá: 7:30–12:00, 12:30–16:00</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:#22c55e;font-weight:500;margin-top:4px;">● Online poptávky 24 / 7</div>
+          </div>
+        </div>
+
+        <div style="padding-top:20px;border-top:1px solid rgba(16,14,11,0.1);">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:#7A7268;">
+            Ekomplex marketing s.r.o. · IČO: 28648684
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: form -->
+    <div class="sr-right">
+      <div class="bezel-outer" style="border-radius:28px;border-color:rgba(16,14,11,0.08);background:rgba(16,14,11,0.04);">
+        <div class="bezel-inner" style="border-radius:26px;background:#100E0B;padding:48px 44px;">
+          <h3 style="font-family:'Fraunces',serif;font-size:30px;font-weight:700;color:#EDE8DE;letter-spacing:-0.02em;margin-bottom:8px;">Poptejte práci</h3>
+          <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:300;color:rgba(237,232,222,0.45);margin-bottom:36px;line-height:1.6;">Odpovíme do 24 hodin. Cenová nabídka je vždy zdarma.</p>
+
+          <form onsubmit="handleForm(event)" style="display:flex;flex-direction:column;gap:24px;">
+            <div>
+              <label class="field-label">Jméno a příjmení</label>
+              <input type="text" placeholder="Jan Novák" class="field-input" required>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div>
+                <label class="field-label">Telefon</label>
+                <input type="tel" placeholder="+420 777 000 000" class="field-input">
+              </div>
+              <div>
+                <label class="field-label">E-mail</label>
+                <input type="email" placeholder="jan@email.cz" class="field-input">
+              </div>
+            </div>
+            <div>
+              <label class="field-label">Město / lokalita</label>
+              <input type="text" placeholder="Praha, Ostrava, ..." class="field-input">
+            </div>
+            <div>
+              <label class="field-label">Popis práce</label>
+              <textarea rows="4" placeholder="Popište, co potřebujete — malování pokoje, nátěr fasády, tapetování..." class="field-input"></textarea>
+            </div>
+            <button type="submit" class="btn-rust" style="justify-content:center;padding:16px 24px;border-radius:14px;font-size:15px;">
+              Odeslat poptávku
+              <span class="icon-wrap" style="width:36px;height:36px;">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5h10M8 3.5l4 4-4 4" stroke="#F5EFE4" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </button>
+          </form>
+
+          <div id="form-success" style="display:none;text-align:center;padding:20px 0;">
+            <div style="font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:#EDE8DE;margin-bottom:8px;">Poptávka odeslána!</div>
+            <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:rgba(237,232,222,0.5);">Ozveme se vám do 24 hodin.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════════════════ -->
+<footer style="background:#100E0B;border-top:1px solid rgba(237,232,222,0.06);padding:40px 24px;" class="md:px-16">
+  <div style="max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:28px;height:28px;background:#B84E1C;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="2" fill="#F5EFE4"/><rect x="1" y="6" width="8" height="2" fill="#F5EFE4"/><rect x="1" y="11" width="5" height="2" fill="#F5EFE4"/></svg>
+      </div>
+      <div style="font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:#EDE8DE;letter-spacing:-0.01em;">Ekomplex CZ</div>
+    </div>
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:rgba(237,232,222,0.25);text-align:center;line-height:1.6;">
+      Natěračství &amp; Malířství · Opava · Celá Česká republika · IČO 28648684
+    </div>
+    <div style="display:flex;gap:20px;">
+      <a href="#sluzby" style="cursor:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:500;color:rgba(237,232,222,0.3);text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;transition:color 0.3s;" onmouseover="this.style.color='rgba(237,232,222,0.7)'" onmouseout="this.style.color='rgba(237,232,222,0.3)'">Služby</a>
+      <a href="#kontakt" style="cursor:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:500;color:rgba(237,232,222,0.3);text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;transition:color 0.3s;" onmouseover="this.style.color='rgba(237,232,222,0.7)'" onmouseout="this.style.color='rgba(237,232,222,0.3)'">Kontakt</a>
+      <a href="mailto:poptavky@ekomplex.cz" style="cursor:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:500;color:rgba(237,232,222,0.3);text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;transition:color 0.3s;" onmouseover="this.style.color='rgba(237,232,222,0.7)'" onmouseout="this.style.color='rgba(237,232,222,0.3)'">E-mail</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ════════════════════════════════════════════════════
+     SCRIPTS
+     ════════════════════════════════════════════════════ -->
+<script>
+  // ── Custom cursor ────────────────────────────────────
+  const dot  = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left  = mx + 'px';
+    dot.style.top   = my + 'px';
+  });
+
+  (function animRing() {
+    rx += (mx - rx) * 0.14;
+    ry += (my - ry) * 0.14;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(animRing);
+  })();
+
+  document.querySelectorAll('a, button, [style*="cursor:none"]').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+
+  // ── Mobile nav close ─────────────────────────────────
+  function closeMenu() {
+    document.getElementById('nav-overlay').classList.remove('open');
+    document.getElementById('hbg-btn').classList.remove('open');
+    // Reset Alpine state
+    const btn = document.getElementById('hbg-btn');
+    btn.dispatchEvent(new CustomEvent('close'));
+  }
+
+  // ── Hero entrance ────────────────────────────────────
+  window.addEventListener('load', () => {
+    const badge = document.getElementById('hero-badge');
+    const title = document.getElementById('hero-title');
+    const sub   = document.getElementById('hero-sub');
+    const strip = document.getElementById('hero-strip');
+
+    [badge, title, sub, strip].forEach((el, i) => {
+      setTimeout(() => {
+        el.style.transition = 'opacity 1s cubic-bezier(0.32,0.72,0,1), transform 1s cubic-bezier(0.32,0.72,0,1)';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 200 + i * 160);
+    });
+  });
+
+  // ── GSAP hero number parallax ────────────────────────
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.to('.hero-ghost', {
+    y: -180,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1.5
+    }
+  });
+
+  // ── IntersectionObserver scroll reveals ─────────────
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = el.style.transitionDelay || '0s';
+        setTimeout(() => el.classList.add('revealed'), parseFloat(delay) * 1000);
+        io.unobserve(el);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+
+  document.querySelectorAll('.sr, .sr-left, .sr-right').forEach(el => io.observe(el));
+
+  // ── Responsive grid collapse ─────────────────────────
+  function adaptGrids() {
+    const isMobile = window.innerWidth < 768;
+    const onas   = document.getElementById('onas-grid');
+    const proc   = document.getElementById('process-grid');
+    const cont   = document.getElementById('contact-grid');
+    const tg     = document.getElementById('tgrid');
+
+    if (onas) onas.style.gridTemplateColumns = isMobile ? '1fr' : '1fr 1fr';
+    if (proc) proc.style.gridTemplateColumns = isMobile ? '1fr' : '1fr 2fr';
+    if (cont) cont.style.gridTemplateColumns = isMobile ? '1fr' : '1fr 1fr';
+    if (tg)   tg.style.gridTemplateColumns  = isMobile ? '1fr' : window.innerWidth < 1024 ? '1fr 1fr' : 'repeat(3,1fr)';
+  }
+  adaptGrids();
+  window.addEventListener('resize', adaptGrids);
+
+  // ── Form ─────────────────────────────────────────────
+  function handleForm(e) {
+    e.preventDefault();
+    e.target.style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+</script>
+
+<style>
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+  }
+</style>
+</body>
+</html>
