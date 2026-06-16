@@ -253,6 +253,38 @@
       .stat .v { font-size: 1.7rem }
     }
 
+    /* hero two-column layout w/ editorial art */
+    .hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 60px; align-items: center }
+    .hero-copy { min-width: 0 }
+    .hero-art { position: relative; margin: 0 }
+    .hero-art img {
+      width: 100%; height: auto; display: block;
+      border-radius: 16px; border: 1px solid var(--line);
+      box-shadow: 0 30px 72px -26px rgba(20, 17, 15, .32);
+    }
+    .hero-art figcaption {
+      position: absolute; left: 16px; bottom: 16px;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase;
+      color: var(--bg); background: rgba(20, 17, 15, .5);
+      backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
+      padding: 7px 13px; border-radius: 8px;
+    }
+    @media(max-width:900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 46px }
+      .hero-art { max-width: 420px }
+    }
+
+    /* textured section dividers (Higgsfield) */
+    .divider {
+      width: 100%; height: 170px; pointer-events: none; position: relative; z-index: 0;
+      background: url("assets/divider.jpg") center/cover no-repeat;
+      mix-blend-mode: multiply;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 42%, #000 58%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0, #000 42%, #000 58%, transparent 100%);
+    }
+    .divider.flip { transform: scaleX(-1) }
+    .divider + .sec { border-top: 0 }
+
     /* section heading */
     .sec { padding: 100px 0; border-top: 1px solid var(--line) }
     .sec-h {
@@ -451,15 +483,24 @@
 
   <header id="top">
     <div class="wrap">
-      <h1 class="reveal in">Weby a automatizace, které firmu posunou — <em>ne jen ozdobí</em>.</h1>
-      <p class="lede reveal in">Jsem nezávislé studio jednoho člověka. Navrhuju a stavím rychlé weby na míru
-        a propojuju je s automatizacemi, které za vás odbavují rutinu — od prvního dojmu až po poslední e-mail.</p>
-      <div class="hero-actions reveal in">
-        <a class="btn btn-primary" href="#projects">Prohlédnout práci
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M5 12h14M13 5l7 7-7 7" />
-          </svg></a>
-        <a class="btn btn-secondary" href="#contact">Pojďme do toho</a>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <h1 class="reveal in">Weby a automatizace, které firmu posunou — <em>ne jen ozdobí</em>.</h1>
+          <p class="lede reveal in">Jsem nezávislé studio jednoho člověka. Navrhuju a stavím rychlé weby na míru
+            a propojuju je s automatizacemi, které za vás odbavují rutinu — od prvního dojmu až po poslední e-mail.</p>
+          <div class="hero-actions reveal in">
+            <a class="btn btn-primary" href="#projects">Prohlédnout práci
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg></a>
+            <a class="btn btn-secondary" href="#contact">Pojďme do toho</a>
+          </div>
+        </div>
+        <figure class="hero-art reveal in">
+          <img src="assets/hero.jpg" width="1167" height="1500" fetchpriority="high"
+            alt="Editorial vizuál — sochařský papírový tvar a hliněná forma v teplém světle">
+          <figcaption>Studio jednoho člověka</figcaption>
+        </figure>
       </div>
 
       <div class="stats reveal in">
@@ -493,6 +534,8 @@
       </div>
     </div>
   </section>
+
+  <div class="divider" aria-hidden="true"></div>
 
   <section class="sec" id="services">
     <div class="wrap">
@@ -597,17 +640,17 @@
         </article>
 
         <article class="card reveal">
-          <a class="card-media" href="https://drenice-sound.vercel.app" target="_blank" rel="noopener" aria-label="Otevřít web Dřenice Sound">
-            <img src="assets/work-drenice.jpg" alt="Náhled webu Dřenice Sound" loading="lazy" width="1280" height="800">
+          <a class="card-media" href="https://ujvary-studio.vercel.app" target="_blank" rel="noopener" aria-label="Otevřít web Ujváry Studio — AI video">
+            <img src="assets/work-aivideo.jpg" alt="Náhled webu Ujváry Studio — reklamy a videa tvořená AI" loading="lazy" width="1280" height="800">
           </a>
           <div class="card-body">
-            <div class="top"><span class="tag t-web">Landing page</span></div>
-            <h3>Dřenice Sound</h3>
-            <p>Atmosférický landing pro hudební open-air. Postavený na první dojem, plynulý pohyb
-              a bleskové načítání i na mobilu v terénu.</p>
-            <div class="stack-line">HTML · CSS · JS</div>
+            <div class="top"><span class="tag t-web">Landing · AI video</span></div>
+            <h3>Ujváry Studio</h3>
+            <p>Osobní studio pro reklamy a videa tvořená umělou inteligencí. Scroll-driven hero
+              s liquid-metal reveal a reálné before/after ukázky produktových spotů.</p>
+            <div class="stack-line">Canvas · Vanilla JS · AI video</div>
             <div class="links">
-              <a class="live" href="https://drenice-sound.vercel.app" target="_blank" rel="noopener">Živě
+              <a class="live" href="https://ujvary-studio.vercel.app" target="_blank" rel="noopener">Živě
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <path d="M7 17L17 7M17 7H8M17 7v9" />
                 </svg></a>
@@ -654,6 +697,8 @@
       </div>
     </div>
   </section>
+
+  <div class="divider flip" aria-hidden="true"></div>
 
   <section class="contact" id="contact">
     <div class="wrap reveal">
