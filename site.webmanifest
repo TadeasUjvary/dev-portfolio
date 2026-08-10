@@ -1,0 +1,15 @@
+{
+  "name": "Tadeáš Ujváry — weby a automatizace na míru",
+  "short_name": "Tadeáš Ujváry",
+  "lang": "cs",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FAF9F7",
+  "theme_color": "#FAF9F7",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
