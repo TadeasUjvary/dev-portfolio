@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Primary SEO -->
-  <title>Tadeáš Ujváry — weby a automatizace na míru | Karlovarský kraj</title>
+  <title>Tvorba webů na míru od 11 000 Kč | Tadeáš Ujváry, Karlovarský kraj</title>
   <meta name="description"
-    content="Nezávislé studio jednoho člověka. Navrhuju a stavím rychlé weby na míru a propojuju firmám nástroje do automatizací přes AI a n8n. Návrh, kód i nasazení pod jednou střechou. Karlovarský kraj i celá ČR.">
+    content="Firemní web na míru za 1–2 týdny, od 11 000 Kč. Návrh, kód i nasazení dělám sám. Weby a automatizace pro firmy v Karlovarském kraji i celé ČR.">
   <meta name="keywords"
     content="tvorba webů na míru, web pro firmu, web developer, UI UX design, automatizace, AI, n8n, Next.js, React, Tailwind, Karlovarský kraj, Cheb, Sokolov">
   <meta name="author" content="Tadeáš Ujváry">
@@ -27,9 +27,9 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tadeáš Ujváry — weby & automatizace">
   <meta property="og:locale" content="cs_CZ">
-  <meta property="og:title" content="Tadeáš Ujváry — weby a automatizace na míru">
+  <meta property="og:title" content="Firemní web na míru za 1–2 týdny, od 11 000 Kč">
   <meta property="og:description"
-    content="Nezávislé studio jednoho člověka. Rychlé weby na míru a automatizace přes AI a n8n — návrh, kód i nasazení pod jednou střechou.">
+    content="Návrh, kód i nasazení dělám sám. Weby a automatizace pro malé a střední firmy po celé ČR.">
   <meta property="og:url" content="https://tadeas-ujvary.cz/">
   <meta property="og:image" content="https://tadeas-ujvary.cz/og.png">
   <meta property="og:image:type" content="image/png">
@@ -39,9 +39,9 @@
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tadeáš Ujváry — weby a automatizace na míru">
+  <meta name="twitter:title" content="Firemní web na míru za 1–2 týdny, od 11 000 Kč">
   <meta name="twitter:description"
-    content="Nezávislé studio jednoho člověka. Rychlé weby na míru a automatizace přes AI a n8n. Karlovarský kraj i celá ČR.">
+    content="Návrh, kód i nasazení dělám sám. Od 11 000 Kč, dodání do dvou týdnů. Karlovarský kraj i celá ČR.">
   <meta name="twitter:image" content="https://tadeas-ujvary.cz/og.png">
 
   <meta name="theme-color" content="#FAF9F7">
@@ -77,7 +77,7 @@
       "@id": "https://tadeas-ujvary.cz/#person",
       "name": "Tadeáš Ujváry",
       "jobTitle": "Web developer & automation engineer",
-      "description": "Nezávislý vývojář a designér. Navrhuju a stavím rychlé weby na míru a propojuju firmám nástroje do automatizací přes AI a n8n — návrh, kód i nasazení pod jednou střechou.",
+      "description": "Nezávislý vývojář a designér. Stavím firemní weby na míru od 11 000 Kč s dodáním do dvou týdnů a propojuju firmám nástroje do automatizací přes AI a n8n.",
       "url": "https://tadeas-ujvary.cz/",
       "email": "mailto:taujvyk@gmail.com",
       "telephone": "+420723065427",
@@ -92,6 +92,39 @@
         "addressCountry": "CZ"
       },
       "sameAs": ["https://github.com/TadeasUjvary"]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://tadeas-ujvary.cz/#sluzba-web",
+      "name": "Tvorba webů na míru",
+      "serviceType": "Tvorba webových stránek na míru",
+      "description": "Firemní web na míru — návrh, kód i nasazení. Bez šablon a bez měsíčních licencí za redakční systém. Dodání zpravidla do 1–2 týdnů.",
+      "provider": { "@id": "https://tadeas-ujvary.cz/#person" },
+      "areaServed": [
+        { "@type": "AdministrativeArea", "name": "Karlovarský kraj" },
+        { "@type": "Country", "name": "Česká republika" }
+      ],
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "CZK",
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "priceCurrency": "CZK",
+          "minPrice": 11000,
+          "valueAddedTaxIncluded": true
+        },
+        "availability": "https://schema.org/InStock",
+        "url": "https://tadeas-ujvary.cz/#ceny"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://tadeas-ujvary.cz/#sluzba-automatizace",
+      "name": "Automatizace a AI pro firmy",
+      "serviceType": "Automatizace firemních procesů",
+      "description": "Propojení formulářů, e-mailů, CRM a AI do workflow přes n8n, které běží bez ruční obsluhy.",
+      "provider": { "@id": "https://tadeas-ujvary.cz/#person" },
+      "areaServed": { "@type": "Country", "name": "Česká republika" }
     },
     {
       "@type": "BreadcrumbList",
@@ -265,7 +298,7 @@
       box-shadow: 0 30px 72px -26px rgba(20, 17, 15, .32);
     }
     .hero-art figcaption {
-      position: absolute; left: 16px; bottom: 16px;
+      position: absolute; left: 16px; bottom: 0; z-index: 4;
       font-family: var(--mono); font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase;
       color: var(--bg); background: rgba(20, 17, 15, .5);
       backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
@@ -296,6 +329,10 @@
     .sec-h h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.9rem, 3.4vw, 2.5rem); letter-spacing: -.025em }
     .sec-h .idx { font-family: var(--mono); font-size: 12px; color: var(--faint); letter-spacing: .06em }
     .sec-h .idx b { color: var(--accent); font-weight: 500 }
+    /* cisla sekci se pocitaji samy — po zapnuti/vypnuti sekce se precisluji */
+    body { counter-reset: sec }
+    .idx b { counter-increment: sec }
+    .idx b::after { content: counter(sec, decimal-leading-zero) }
     .sec-sub { margin: -34px 0 46px; max-width: 58ch; color: var(--muted); font-size: 1.02rem; line-height: 1.65 }
 
     /* services */
@@ -463,6 +500,138 @@
       .reveal { opacity: 1; transform: none; transition: none }
       .ambient::before, .eyebrow .dot::after { animation: none }
     }
+
+    /* hero art — stack of real client sites */
+    .hero-art .shot-stack { position: relative; padding-bottom: 16%; }
+    .hero-art .shot {
+      display: block; width: 100%; height: auto;
+      border-radius: 14px; border: 1px solid var(--line);
+      box-shadow: 0 30px 72px -26px rgba(20, 17, 15, .32);
+      background: #F0EDE8;
+    }
+    .hero-art .shot.b, .hero-art .shot.c { position: absolute; width: 62%; }
+    .hero-art .shot.b { right: 0; bottom: 0; z-index: 2; box-shadow: 0 22px 48px -20px rgba(20, 17, 15, .38) }
+    .hero-art .shot.c { left: 0; bottom: 7%; width: 46%; z-index: 1; box-shadow: 0 18px 40px -20px rgba(20, 17, 15, .3) }
+
+    /* inline stack strip under services */
+    .stackstrip { margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--line) }
+    .stackstrip .lbl {
+      font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--faint); display: block; margin-bottom: 16px;
+    }
+
+    /* pricing + process */
+    .pricebox {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+      padding: 38px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
+    }
+    .pricebox .figure .from { font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint) }
+    .pricebox .figure .amount {
+      font-family: var(--serif); font-size: clamp(2.6rem, 5.4vw, 3.6rem);
+      letter-spacing: -.03em; line-height: 1; margin: 10px 0 18px;
+    }
+    .pricebox .figure p { color: var(--muted); font-size: .98rem; line-height: 1.65; max-width: 40ch }
+    .pricebox .figure .note { margin-top: 20px; font-size: .92rem; color: var(--ink) }
+    .pricebox .factors { border-left: 1px solid var(--line); padding-left: 34px }
+    .pricebox .factors .lbl {
+      font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--faint); display: block; margin-bottom: 16px;
+    }
+    .pricebox .factors ul { list-style: none }
+    .pricebox .factors li {
+      padding: 11px 0; border-bottom: 1px solid var(--line-soft);
+      font-size: .95rem; color: #2E2A27; display: flex; gap: 12px; align-items: baseline;
+    }
+    .pricebox .factors li:last-child { border-bottom: 0 }
+    .pricebox .factors li span { color: var(--accent); font-family: var(--mono); font-size: 11px }
+    @media(max-width:820px) {
+      .pricebox { grid-template-columns: 1fr; gap: 30px; padding: 30px }
+      .pricebox .factors { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: 24px }
+    }
+
+    .steps { margin-top: 16px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px }
+    .steps .step { padding: 26px 22px 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px }
+    .steps .step .n {
+      font-family: var(--mono); font-size: 11px; color: var(--accent);
+      letter-spacing: .07em; display: block; margin-bottom: 16px;
+    }
+    .steps .step h3 { font-family: var(--serif); font-weight: 400; font-size: 1.15rem; letter-spacing: -.02em; margin-bottom: 9px }
+    .steps .step p { color: var(--muted); font-size: .92rem; line-height: 1.6 }
+    @media(max-width:900px) { .steps { grid-template-columns: 1fr 1fr } }
+    @media(max-width:560px) { .steps { grid-template-columns: 1fr } }
+
+    /* mid-page CTA band */
+    .midcta {
+      margin: 0 auto; max-width: 1120px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap;
+      background: var(--ink); color: var(--bg);
+      border-radius: 16px; padding: 34px 38px;
+    }
+    .midcta p { font-family: var(--serif); font-size: clamp(1.25rem, 2.6vw, 1.7rem); letter-spacing: -.02em; line-height: 1.25; max-width: 30ch }
+    .midcta .btn-invert {
+      background: var(--bg); color: var(--ink); border-color: var(--bg);
+      white-space: nowrap;
+    }
+    .midcta .btn-invert:hover { background: #EDE9E3 }
+
+    /* quotes / reviews */
+    .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px }
+    .quote {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+      padding: 30px; display: flex; flex-direction: column;
+    }
+    .quote .rating { font-size: 13px; letter-spacing: .16em; color: var(--accent); margin-bottom: 18px }
+    .quote blockquote { font-family: var(--serif); font-size: 1.12rem; line-height: 1.55; letter-spacing: -.015em; flex: 1 }
+    .quote figcaption { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line-soft); font-family: var(--mono); font-size: 11.5px; color: var(--muted); line-height: 1.7 }
+    .quote figcaption b { display: block; color: var(--ink); font-weight: 500; font-size: 12.5px }
+    .quote figcaption a { border-bottom: 1px solid var(--line); transition: border-color .2s }
+    .quote figcaption a:hover { border-color: var(--accent); color: var(--accent) }
+    @media(max-width:900px) { .quotes { grid-template-columns: 1fr } }
+
+    /* contact form */
+    .form { max-width: 560px; margin: 40px auto 0; text-align: left }
+    .form .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px }
+    .form label {
+      display: block; font-family: var(--mono); font-size: 11px;
+      letter-spacing: .07em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px;
+    }
+    .form .field { margin-bottom: 18px }
+    .form input, .form textarea, .form select {
+      width: 100%; font-family: var(--sans); font-size: .98rem; color: var(--ink);
+      background: var(--surface); border: 1px solid var(--line); border-radius: 9px;
+      padding: 13px 15px; transition: border-color .18s, box-shadow .18s;
+    }
+    .form textarea { resize: vertical; min-height: 120px; line-height: 1.6 }
+    .form input:focus, .form textarea:focus, .form select:focus {
+      outline: 0; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+    .form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden }
+    .form button {
+      width: 100%; cursor: pointer; font-family: var(--mono); font-size: 13px;
+      background: var(--ink); color: var(--bg); border: 1px solid var(--ink);
+      border-radius: 9px; padding: 15px 24px;
+      transition: background .18s, transform .12s;
+    }
+    .form button:hover:not(:disabled) { background: #2B2521 }
+    .form button:active { transform: scale(.99) }
+    .form button:disabled { opacity: .6; cursor: default }
+    .form .consent { margin-top: 14px; font-size: 12px; color: var(--faint); line-height: 1.6; text-align: center }
+    .form .consent a { border-bottom: 1px solid var(--line) }
+    .formnote {
+      margin-top: 16px; padding: 14px 16px; border-radius: 9px;
+      font-size: .93rem; line-height: 1.6; display: none;
+    }
+    .formnote.show { display: block }
+    .formnote.ok { background: var(--pale-green-bg); color: var(--pale-green-tx) }
+    .formnote.err { background: var(--pale-red-bg); color: var(--pale-red-tx) }
+    .contact .alt {
+      margin-top: 34px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      font-family: var(--mono); font-size: 12.5px; color: var(--muted);
+    }
+    .contact .alt a { border-bottom: 1px solid var(--line); padding-bottom: 2px; transition: color .2s, border-color .2s }
+    .contact .alt a:hover { color: var(--accent); border-color: var(--accent) }
+    @media(max-width:560px) { .form .row2 { grid-template-columns: 1fr } }
   </style>
 </head>
 
@@ -475,10 +644,10 @@
       <a href="#top" class="brand"><b>Tadeáš Ujváry</b> <span>— studio</span></a>
       <div class="navlinks">
         <a href="#about">O mně</a>
-        <a href="#services">Co dělám</a>
-        <a href="#tech">Stack</a>
+        <a href="#services">Služby</a>
+        <a href="#ceny">Ceny</a>
         <a href="#projects">Práce</a>
-        <a class="cta" href="#contact">Napsat</a>
+        <a class="cta" href="#contact">Nezávazná poptávka</a>
       </div>
     </div>
   </nav>
@@ -487,28 +656,34 @@
     <div class="wrap">
       <div class="hero-grid">
         <div class="hero-copy">
-          <h1 class="reveal in">Weby a automatizace, které firmu posunou — <em>ne jen ozdobí</em>.</h1>
-          <p class="lede reveal in">Jsem nezávislé studio jednoho člověka. Navrhuju a stavím rychlé weby na míru
-            a propojuju je s automatizacemi, které za vás odbavují rutinu — od prvního dojmu až po poslední e-mail.</p>
+          <h1 class="reveal in">Firemní web na míru za <em>1–2 týdny</em>.</h1>
+          <p class="lede reveal in">Návrh, kód i nasazení dělám sám — nejednáte s obchodníkem, který
+            zadání předá dál. Weby a automatizace pro malé a střední firmy po celé ČR. Od 11 000 Kč.</p>
           <div class="hero-actions reveal in">
-            <a class="btn btn-primary" href="#projects">Prohlédnout práci
+            <a class="btn btn-primary" href="#contact">Chci nezávaznou nabídku
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M5 12h14M13 5l7 7-7 7" />
               </svg></a>
-            <a class="btn btn-secondary" href="#contact">Pojďme do toho</a>
+            <a class="btn btn-secondary" href="#projects">Prohlédnout práci</a>
           </div>
         </div>
         <figure class="hero-art reveal in">
-          <img src="assets/hero.jpg" width="1167" height="1500" fetchpriority="high"
-            alt="Editorial vizuál — sochařský papírový tvar a hliněná forma v teplém světle">
-          <figcaption>Studio jednoho člověka</figcaption>
+          <div class="shot-stack">
+            <img class="shot a" src="assets/work-kolotoce.jpg" width="1280" height="800" fetchpriority="high"
+              alt="Web Kolotoče Janeček — katalog pouťových atrakcí">
+            <img class="shot b" src="assets/work-extremeline.jpg" width="1280" height="800" loading="lazy"
+              alt="Web Extreme Line — výškové práce lanovým přístupem">
+            <img class="shot c" src="assets/work-sicistroje.jpg" width="1280" height="800" loading="lazy"
+              alt="Prodejní web se šicími stroji a vlastní administrací">
+          </div>
+          <figcaption>Kolotoče Janeček · Extreme Line · Šicí stroje</figcaption>
         </figure>
       </div>
 
       <div class="stats reveal in">
-        <div class="stat"><div class="v">Návrh → nasazení</div><div class="k">vše pod jednou střechou</div></div>
-        <div class="stat"><div class="v">100 % na míru</div><div class="k">žádné šablony, žádné kompromisy</div></div>
-        <div class="stat"><div class="v">do 24 h</div><div class="k">odpovídám na poptávky</div></div>
+        <div class="stat"><div class="v">od 11 000 Kč</div><div class="k">firemní web na míru</div></div>
+        <div class="stat"><div class="v">1–2 týdny</div><div class="k">od zadání po spuštění</div></div>
+        <div class="stat"><div class="v">0 Kč</div><div class="k">za nezávaznou nabídku i konzultaci</div></div>
       </div>
     </div>
   </header>
@@ -517,19 +692,21 @@
     <div class="wrap">
       <div class="sec-h reveal">
         <h2>Kdo za tím stojí</h2>
-        <span class="idx"><b>01</b> — o mně</span>
+        <span class="idx"><b></b> — o mně</span>
       </div>
       <div class="about reveal">
         <div class="body">
-          <p>Jsem Tadeáš — vývojář a designér z Karlovarského kraje. Celý projekt vedu od prvního
-            návrhu přes kód až po nasazení — bez předávání mezi lidmi a bez ztrát v komunikaci.</p>
-          <p>Nedělám šablony ani polovičatá řešení. Každý web stavím od základu na míru značce —
-            rychlý, čistý a postavený tak, aby dával smysl i za dva roky.</p>
-          <p>Vedle webů firmám propojuju nástroje a automatizuju rutinu přes AI a n8n. Méně ručního
-            klikání, víc času na práci, která reálně vydělává.</p>
+          <p>Jsem Tadeáš, vývojář a designér z Karlovarského kraje. Web vám navrhnu, naprogramuju
+            i spustím. Celou dobu mluvíte s jedním člověkem, který ho staví — ne s někým, kdo vaše
+            připomínky přeposílá dál.</p>
+          <p>Nestavím na WordPress šablonách. Každý web píšu od nuly, takže se načte rychle,
+            nedrží zbytečné pluginy a nikdo za něj neplatí měsíční licence.</p>
+          <p>Vedle webů propojuju firmám nástroje do automatizací přes n8n a AI. Věci, které někdo
+            v kanceláři překlikává ručně, běží samy na pozadí.</p>
         </div>
         <div class="side">
           <div class="row"><span class="lbl">Působnost</span><span class="val">Celá ČR · online</span></div>
+          <div class="row"><span class="lbl">Dodání</span><span class="val">1–2 týdny</span></div>
           <div class="row"><span class="lbl">Zaměření</span><span class="val">Weby · UI/UX · Automatizace</span></div>
           <div class="row"><span class="lbl">Jazyky</span><span class="val">CZ · EN</span></div>
         </div>
@@ -543,54 +720,100 @@
     <div class="wrap">
       <div class="sec-h reveal">
         <h2>Co dělám</h2>
-        <span class="idx"><b>02</b> — služby</span>
+        <span class="idx"><b></b> — služby</span>
       </div>
       <div class="svcgrid">
 
         <article class="svc reveal">
           <span class="n">S/01 · WEBY</span>
           <h3>Weby na míru</h3>
-          <p>Od firemní prezentace po složitější aplikaci. Návrh, kód i nasazení pod jednou střechou —
-            rychlé, responzivní a postavené tak, aby vydržely a daly se rozšiřovat.</p>
+          <p>Firemní prezentace, landing page nebo web s vlastní administrací, kterou obsluhujete
+            sami. Postavený tak, aby se dal za rok rozšířit, ne zahodit a dělat znovu.</p>
         </article>
 
         <article class="svc reveal">
           <span class="n">S/02 · DESIGN</span>
           <h3>UI / UX Design</h3>
-          <p>Rozhraní, která vzbudí důvěru na první pohled a vedou návštěvníka přesně tam, kam má.
-            Design, který prodává — ne jen zdobí.</p>
+          <p>Vzhled, který vás postaví na úroveň větší konkurence i s menším rozpočtem. Rozvržení
+            řeším podle toho, kam má návštěvník kliknout — ne podle toho, co je zrovna v kurzu.</p>
         </article>
 
         <article class="svc reveal">
           <span class="n">S/03 · AUTOMATIZACE</span>
           <h3>Automatizace &amp; AI</h3>
-          <p>Propojím formuláře, e-maily, CRM i AI do jednoho workflow, které běží samo.
-            Rutina, kterou už nikdy nemusíte řešit ručně.</p>
+          <p>Poptávka z formuláře, která sama odpoví zákazníkovi, zapíše se do tabulky a pošle vám
+            notifikaci. Propojím e-maily, CRM i AI přes n8n do workflow, které běží bez vás.</p>
         </article>
 
+      </div>
+
+      <div class="stackstrip reveal">
+        <span class="lbl">Stavím na</span>
+        <div class="chips">
+          <span class="chip">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">Tailwind CSS</span>
+          <span class="chip">Supabase</span>
+          <span class="chip">Firebase</span>
+          <span class="chip">n8n</span>
+          <span class="chip">AI / LLM</span>
+          <span class="chip">Figma</span>
+          <span class="chip">Vercel</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="sec" id="tech">
+  <section class="sec" id="ceny">
     <div class="wrap">
       <div class="sec-h reveal">
-        <h2>S čím to stavím</h2>
-        <span class="idx"><b>03</b> — stack</span>
+        <h2>Kolik to stojí a jak to probíhá</h2>
+        <span class="idx"><b></b> — ceny</span>
       </div>
-      <p class="sec-sub reveal">Moderní, prověřený stack. Žádné experimenty na váš účet —
-        technologie, kterým rozumím a které vás nezradí v provozu.</p>
-      <div class="chips reveal">
-        <span class="chip">React</span>
-        <span class="chip">Next.js</span>
-        <span class="chip">TypeScript</span>
-        <span class="chip">Tailwind CSS</span>
-        <span class="chip">Supabase</span>
-        <span class="chip">Firebase</span>
-        <span class="chip">n8n</span>
-        <span class="chip">AI / LLM</span>
-        <span class="chip">Figma</span>
-        <span class="chip">Vercel</span>
+
+      <div class="pricebox reveal">
+        <div class="figure">
+          <span class="from">Firemní web</span>
+          <div class="amount">od 11 000 Kč</div>
+          <p>Cena je konečná — v ní je návrh, kód, nasazení na vaši doménu i předání přístupů.
+            Žádné měsíční licence za redakční systém.</p>
+          <p class="note">Přesnou cenu a termín dostanete do 24 hodin po prvním hovoru. Zdarma
+            a nezávazně.</p>
+        </div>
+        <div class="factors">
+          <span class="lbl">Co cenu posouvá nahoru</span>
+          <ul>
+            <li><span>+</span> více stránek a rozsáhlejší obsah</li>
+            <li><span>+</span> administrace, kde si obsah spravujete sami</li>
+            <li><span>+</span> cizojazyčná verze webu</li>
+            <li><span>+</span> napojení na e-shop, CRM nebo skladový systém</li>
+            <li><span>+</span> automatizace a AI nad rámec webu</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="steps reveal">
+        <div class="step">
+          <span class="n">K/01</span>
+          <h3>Hovor na 20 minut</h3>
+          <p>Řeknete mi, co firma dělá a co má web přinést. Zdarma, nezávazně, klidně po telefonu.</p>
+        </div>
+        <div class="step">
+          <span class="n">K/02</span>
+          <h3>Nabídka do 24 h</h3>
+          <p>Dostanete pevnou cenu a termín. Ne odhad, který se v půlce projektu zdvojnásobí.</p>
+        </div>
+        <div class="step">
+          <span class="n">K/03</span>
+          <h3>Návrh, pak kód</h3>
+          <p>Vzhled schválíte dřív, než začnu programovat. Připomínky k návrhu jsou v ceně.</p>
+        </div>
+        <div class="step">
+          <span class="n">K/04</span>
+          <h3>Spuštění</h3>
+          <p>Nasadím na vaši doménu, předám přístupy a ukážu, jak si obsah měníte sami.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -598,9 +821,89 @@
   <section class="sec" id="projects">
     <div class="wrap">
       <div class="sec-h reveal">
-        <h2>Vybraná práce</h2>
-        <span class="idx"><b>04</b> — projekty</span>
+        <h2>Práce pro klienty</h2>
+        <span class="idx"><b></b> — projekty</span>
       </div>
+      <div class="grid">
+
+        <article class="card reveal">
+          <a class="card-media" href="https://kolotoce-janecek.cz" target="_blank" rel="noopener" aria-label="Otevřít web Kolotoče Janeček">
+            <img src="assets/work-kolotoce.jpg" alt="Náhled webu Kolotoče Janeček — pouťové atrakce" loading="lazy" width="1280" height="800">
+          </a>
+          <div class="card-body">
+            <div class="top"><span class="tag t-ts">Firemní web · Atrakce</span></div>
+            <h3>Kolotoče Janeček</h3>
+            <p>Rodinná firma s pouťovými atrakcemi potřebovala něco, co pošle pořadateli slavností
+              místo vyjmenovávání do telefonu. Katalog atrakcí s fotogalerií a kontaktem, který
+              funguje i z mobilu přímo na pouti.</p>
+            <div class="stack-line">HTML · CSS · JS · vlastní doména</div>
+            <div class="links">
+              <a class="live" href="https://kolotoce-janecek.cz" target="_blank" rel="noopener">Živě
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M7 17L17 7M17 7H8M17 7v9" />
+                </svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <a class="card-media" href="https://extreme-line.vercel.app" target="_blank" rel="noopener" aria-label="Otevřít web Extreme Line">
+            <img src="assets/work-extremeline.jpg" alt="Náhled webu Extreme Line — výškové práce lanovým přístupem" loading="lazy" width="1280" height="800">
+          </a>
+          <div class="card-body">
+            <div class="top"><span class="tag t-tool">Firemní web · Výškové práce</span></div>
+            <h3>Extreme Line</h3>
+            <p>Opravy fasád a inspekce budov lanovým přístupem, tedy bez lešení. Tmavý industriální
+              design, který sedí k oboru, česká i anglická verze a poptávkový formulář na dosah
+              z každé stránky.</p>
+            <div class="stack-line">HTML · CSS · JS · dvojjazyčný web</div>
+            <div class="links">
+              <a class="live" href="https://extreme-line.vercel.app" target="_blank" rel="noopener">Živě
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M7 17L17 7M17 7H8M17 7v9" />
+                </svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <a class="card-media" href="https://sici-stroje.vercel.app" target="_blank" rel="noopener" aria-label="Otevřít web Šicí stroje">
+            <img src="assets/work-sicistroje.jpg" alt="Náhled webu prodejny šicích strojů" loading="lazy" width="1280" height="800">
+          </a>
+          <div class="card-body">
+            <div class="top"><span class="tag t-web">Web + Admin · Prodej</span></div>
+            <h3>Šicí stroje</h3>
+            <p>Prodejní web s vlastní administrací. Klient si sám přidává, upravuje i maže stroje
+              včetně fotek — bez programátora a bez měsíčního poplatku za redakční systém.</p>
+            <div class="stack-line">Next.js · Admin rozhraní · Vercel</div>
+            <div class="links">
+              <a class="live" href="https://sici-stroje.vercel.app" target="_blank" rel="noopener">Živě
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M7 17L17 7M17 7H8M17 7v9" />
+                </svg></a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding-bottom:100px">
+    <div class="midcta reveal">
+      <p>Máte podobnou firmu a web, který ji brzdí?</p>
+      <a class="btn btn-invert" href="#contact">Napište mi — odpovím do 24 h</a>
+    </div>
+  </div>
+
+  <section class="sec" id="produkty">
+    <div class="wrap">
+      <div class="sec-h reveal">
+        <h2>Vlastní produkty</h2>
+        <span class="idx"><b></b> — moje projekty</span>
+      </div>
+      <p class="sec-sub reveal">Tohle nejsou zakázky, ale věci, které stavím sám pro sebe. Nejlepší
+        způsob, jak si ověřit, že technologie, které prodávám klientům, opravdu fungují v provozu.</p>
       <div class="grid">
 
         <article class="card reveal">
@@ -648,8 +951,8 @@
           <div class="card-body">
             <div class="top"><span class="tag t-web">Landing · AI video</span></div>
             <h3>Ujváry Studio</h3>
-            <p>Osobní studio pro reklamy a videa tvořená umělou inteligencí. Scroll-driven hero
-              s liquid-metal reveal a reálné before/after ukázky produktových spotů.</p>
+            <p>Produktová videa a fotky pro e-shopy tvořené AI — místo fotostudia a štábu.
+              Scroll-driven hero a reálné before/after ukázky spotů.</p>
             <div class="stack-line">Canvas · Vanilla JS · AI video</div>
             <div class="links">
               <a class="live" href="https://ujvary-studio.vercel.app" target="_blank" rel="noopener">Živě
@@ -660,114 +963,129 @@
           </div>
         </article>
 
-        <article class="card reveal">
-          <a class="card-media" href="https://kolotoce-janecek.cz" target="_blank" rel="noopener" aria-label="Otevřít web Kolotoče Janeček">
-            <img src="assets/work-kolotoce.jpg" alt="Náhled webu Kolotoče Janeček — pouťové atrakce" loading="lazy" width="1280" height="800">
-          </a>
-          <div class="card-body">
-            <div class="top"><span class="tag t-ts">Firemní web · Atrakce</span></div>
-            <h3>Kolotoče Janeček</h3>
-            <p>Web rodinné firmy s pouťovými atrakcemi. Hravý barevný design, fotogalerie
-              atrakcí a přehled nabídky pro města, slavnosti i festivaly po celé ČR.</p>
-            <div class="stack-line">HTML · CSS · JS · vlastní doména</div>
-            <div class="links">
-              <a class="live" href="https://kolotoce-janecek.cz" target="_blank" rel="noopener">Živě
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path d="M7 17L17 7M17 7H8M17 7v9" />
-                </svg></a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card reveal">
-          <a class="card-media" href="https://extreme-line.vercel.app" target="_blank" rel="noopener" aria-label="Otevřít web Extreme Line">
-            <img src="assets/work-extremeline.jpg" alt="Náhled webu Extreme Line — výškové práce lanovým přístupem" loading="lazy" width="1280" height="800">
-          </a>
-          <div class="card-body">
-            <div class="top"><span class="tag t-tool">Firemní web · Výškové práce</span></div>
-            <h3>Extreme Line</h3>
-            <p>Prezentace firmy na výškové práce lanovým přístupem — opravy fasád, inspekce
-              budov a práce bez lešení. Tmavý industriální design, CZ/EN verze a poptávkový formulář.</p>
-            <div class="stack-line">HTML · CSS · JS · dvojjazyčný web</div>
-            <div class="links">
-              <a class="live" href="https://extreme-line.vercel.app" target="_blank" rel="noopener">Živě
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path d="M7 17L17 7M17 7H8M17 7v9" />
-                </svg></a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card reveal">
-          <a class="card-media" href="https://sici-stroje.vercel.app" target="_blank" rel="noopener" aria-label="Otevřít web Šicí stroje">
-            <img src="assets/work-sicistroje.jpg" alt="Náhled webu prodejny šicích strojů" loading="lazy" width="1280" height="800">
-          </a>
-          <div class="card-body">
-            <div class="top"><span class="tag t-web">Web + Admin · Prodej</span></div>
-            <h3>Šicí stroje</h3>
-            <p>Prodejní web s vlastní administrací — klient si sám přidává a maže stroje
-              včetně fotek, bez programátora. Katalog, poptávky a admin v jednom.</p>
-            <div class="stack-line">Next.js · Admin rozhraní · Vercel</div>
-            <div class="links">
-              <a class="live" href="https://sici-stroje.vercel.app" target="_blank" rel="noopener">Živě
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path d="M7 17L17 7M17 7H8M17 7v9" />
-                </svg></a>
-            </div>
-          </div>
-        </article>
-
       </div>
     </div>
   </section>
 
-  <section class="sec" id="why">
+  <!--
+    ============================================================================
+    SEKCE REFERENCE — ZAPNOUT AŽ PO ODSOUHLASENÍ KLIENTY
+    ============================================================================
+    Níže jsou NÁVRHY textů, ne citace. Nikdo je zatím neřekl.
+    Než sekci odkomentuješ (smaž tenhle blok i koncovou značku komentáře pod ním):
+
+      1) Doplň skutečné jméno, pozici a firmu místo [HRANATÝCH ZÁVOREK].
+      2) Pošli klientovi přesné znění k odsouhlasení. Stačí zpráva:
+         "Dobrý den, chystám na web referenci. Sepsal jsem podle naší
+          spolupráce tohle znění — sedí vám, nebo něco upravíme?
+          Bez vašeho odsouhlasení to nezveřejním."
+      3) Až odepíše, sekci odkomentuj a přidej do nav odkaz na #reference.
+         Čísla sekcí se přepočítají sama, ta řešit nemusíš.
+
+    Bez kroku 2 to není reference, ale text, který jsi si napsal sám.
+    Kdyby na to někdo přišel, stojí tě to víc, než ti tři odstavce vydělají.
+    ============================================================================
+
+  <section class="sec" id="reference">
     <div class="wrap">
       <div class="sec-h reveal">
-        <h2>Proč pracovat se mnou</h2>
-        <span class="idx"><b>05</b> — proč já</span>
+        <h2>Co říkají klienti</h2>
+        <span class="idx"><b></b> — reference</span>
       </div>
-      <div class="why reveal">
-        <div class="item">
-          <span class="num">01</span>
-          <h3>Návrh i kód na míru</h3>
-          <p>Žádné šablony. Každý projekt stavím od základu podle vaší značky a cílů.</p>
-        </div>
-        <div class="item">
-          <span class="num">02</span>
-          <h3>Rychlost, kterou poznáte</h3>
-          <p>Weby laděné na výkon. Načtou se dřív, než návštěvník stihne ztratit zájem.</p>
-        </div>
-        <div class="item">
-          <span class="num">03</span>
-          <h3>Sebevědomý design</h3>
-          <p>Vzhled, který vás postaví na úroveň větší konkurence — i s menším rozpočtem.</p>
-        </div>
-        <div class="item">
-          <span class="num">04</span>
-          <h3>Automatizace navrch</h3>
-          <p>Web umím propojit s nástroji, které za vás odbavují rutinu na pozadí.</p>
-        </div>
-        <div class="item">
-          <span class="num">05</span>
-          <h3>Výsledek, ne efekty</h3>
-          <p>Měřím úspěch tím, co web firmě přinese — ne počtem animací na stránce.</p>
-        </div>
+      <div class="quotes">
+
+        <figure class="quote reveal">
+          <div class="rating" aria-label="Hodnocení 5 z 5">★★★★★</div>
+          <blockquote>„Domluvili jsme se v pondělí a za dva týdny web běžel. Tadeáš si obsah
+            vytáhl sám a nemusel jsem nic hlídat.“</blockquote>
+          <figcaption>
+            <b>[Jméno Příjmení]</b>
+            [pozice], Kolotoče Janeček<br>
+            <a href="https://kolotoce-janecek.cz" target="_blank" rel="noopener">kolotoce-janecek.cz</a>
+          </figcaption>
+        </figure>
+
+        <figure class="quote reveal">
+          <div class="rating" aria-label="Hodnocení 5 z 5">★★★★★</div>
+          <blockquote>„Web vypadá dráž, než co má konkurence. Poptávky teď chodí z formuláře,
+            ne jen přes telefon.“</blockquote>
+          <figcaption>
+            <b>[Jméno Příjmení]</b>
+            [pozice], Extreme Line s.r.o.<br>
+            <a href="https://extreme-line.vercel.app" target="_blank" rel="noopener">extreme-line.cz</a>
+          </figcaption>
+        </figure>
+
+        <figure class="quote reveal">
+          <div class="rating" aria-label="Hodnocení 5 z 5">★★★★★</div>
+          <blockquote>„Nejvíc oceňuju administraci. Nový stroj si nafotím a nahodím sám za pět
+            minut, nemusím nikomu volat ani za to platit.“</blockquote>
+          <figcaption>
+            <b>[Jméno Příjmení]</b>
+            [pozice], [Firma]<br>
+            <a href="https://sici-stroje.vercel.app" target="_blank" rel="noopener">sici-stroje.cz</a>
+          </figcaption>
+        </figure>
+
       </div>
     </div>
   </section>
+  -->
 
   <div class="divider flip" aria-hidden="true"></div>
 
   <section class="contact" id="contact">
     <div class="wrap reveal">
-      <span class="idx"><b>06</b> — kontakt</span>
-      <h2>Pojďme postavit něco, na co budete <em>hrdí</em>.</h2>
-      <p class="lede-c">Máte nápad, firmu k posunutí nebo web, který už neslouží?
-        Napište mi — ozvu se do 24 hodin a probereme, co dává smysl.</p>
-      <a class="mail" href="mailto:taujvyk@gmail.com">taujvyk@gmail.com</a>
-      <div class="socials">
-        <a href="mailto:taujvyk@gmail.com">E-mail</a>
+      <span class="idx"><b></b> — kontakt</span>
+      <h2>Řekněte mi, co má web <em>umět</em>.</h2>
+      <p class="lede-c">Napište pár vět o firmě. Do 24 hodin se ozvu s tím, co dává smysl,
+        za kolik a do kdy. Nezávazně.</p>
+
+      <form class="form" id="poptavka" novalidate>
+        <div class="row2">
+          <div class="field">
+            <label for="f-jmeno">Jméno</label>
+            <input id="f-jmeno" name="jmeno" type="text" required autocomplete="name" placeholder="Jan Novák">
+          </div>
+          <div class="field">
+            <label for="f-email">E-mail</label>
+            <input id="f-email" name="email" type="email" required autocomplete="email" placeholder="jan@firma.cz">
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="f-telefon">Telefon <span style="text-transform:none">(nepovinné)</span></label>
+            <input id="f-telefon" name="telefon" type="tel" autocomplete="tel" placeholder="+420 …">
+          </div>
+          <div class="field">
+            <label for="f-typ">O co jde</label>
+            <select id="f-typ" name="typ">
+              <option>Nový firemní web</option>
+              <option>Předělání stávajícího webu</option>
+              <option>Web s administrací nebo e-shop</option>
+              <option>Automatizace / AI</option>
+              <option>Něco jiného</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-zprava">Co firma dělá a co má web řešit</label>
+          <textarea id="f-zprava" name="zprava" required
+            placeholder="Např.: Děláme zámečnictví na Chebsku, web máme deset let starý a nejde otevřít na mobilu. Potřebujeme, aby nám odtud chodily poptávky."></textarea>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label for="f-web">Nevyplňujte</label>
+          <input id="f-web" name="web" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <button type="submit" id="f-odeslat">Odeslat poptávku</button>
+        <p class="consent">Odesláním souhlasíte se zpracováním údajů za účelem odpovědi na poptávku.
+          Víc v <a href="/obchodni-podminky">obchodních podmínkách</a>.</p>
+        <div class="formnote" id="f-note" role="status" aria-live="polite"></div>
+      </form>
+
+      <div class="alt">
+        <span>Nebo rovnou:</span>
+        <a href="mailto:taujvyk@gmail.com">taujvyk@gmail.com</a>
         <a href="tel:+420723065427">+420 723 065 427</a>
         <a href="https://github.com/TadeasUjvary" target="_blank" rel="me noopener">GitHub</a>
       </div>
@@ -792,6 +1110,50 @@
     const nav = document.getElementById('nav');
     const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
     onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* poptávkový formulář */
+    const form = document.getElementById('poptavka');
+    const note = document.getElementById('f-note');
+    const btn = document.getElementById('f-odeslat');
+
+    const say = (text, ok) => {
+      note.textContent = text;
+      note.className = 'formnote show ' + (ok ? 'ok' : 'err');
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      if (!data.jmeno?.trim() || !data.zprava?.trim()) {
+        return say('Vyplňte prosím jméno a popis toho, co potřebujete.', false);
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email || '')) {
+        return say('Zkontrolujte prosím e-mail — bez něj se vám nemám jak ozvat.', false);
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Odesílám…';
+
+      try {
+        const res = await fetch('/api/kontakt', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error(await res.text());
+
+        form.querySelectorAll('input, textarea').forEach(el => el.value = '');
+        say('Hotovo. Zpráva dorazila a na váš e-mail právě odešlo potvrzení — obojí odbavila '
+          + 'automatizace, jakou stavím klientům. Ozvu se do 24 hodin.', true);
+        btn.textContent = 'Odesláno';
+      } catch (err) {
+        say('Odeslání se nepovedlo. Napište mi prosím přímo na taujvyk@gmail.com '
+          + 'nebo zavolejte na +420 723 065 427.', false);
+        btn.disabled = false;
+        btn.textContent = 'Zkusit znovu';
+      }
+    });
   </script>
 
   <!-- Vercel Web Analytics -->
