@@ -1142,10 +1142,13 @@
           body: JSON.stringify(data)
         });
         if (!res.ok) throw new Error(await res.text());
+        const out = await res.json().catch(() => ({}));
 
         form.querySelectorAll('input, textarea').forEach(el => el.value = '');
-        say('Hotovo. Zpráva dorazila a na váš e-mail právě odešlo potvrzení — obojí odbavila '
-          + 'automatizace, jakou stavím klientům. Ozvu se do 24 hodin.', true);
+        say(out.autoreply
+          ? 'Hotovo. Zpráva dorazila a na váš e-mail právě odešlo potvrzení — obojí odbavila '
+            + 'automatizace, jakou stavím klientům. Ozvu se do 24 hodin.'
+          : 'Hotovo, zpráva dorazila. Ozvu se do 24 hodin.', true);
         btn.textContent = 'Odesláno';
       } catch (err) {
         say('Odeslání se nepovedlo. Napište mi prosím přímo na taujvyk@gmail.com '

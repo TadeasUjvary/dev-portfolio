@@ -78,6 +78,7 @@ module.exports = async function handler(req, res) {
   }
 
   // 2) autoodpověď zákazníkovi — když selže, poptávku už mám, takže nevadí
+  let autoreply = false;
   try {
     const auto = await send(key, {
       from: `Tadeáš Ujváry <${from}>`,
@@ -96,10 +97,12 @@ module.exports = async function handler(req, res) {
         </div>
       `
     });
-    if (!auto.ok) console.warn('Autoodpověď neodešla:', await auto.text());
+    if (auto.ok) autoreply = true;
+    else console.warn('Autoodpověď neodešla:', await auto.text());
   } catch (e) {
     console.warn('Autoodpověď selhala:', e.message);
   }
 
-  return res.status(200).json({ ok: true });
+  // autoreply=false → web zákazníkovi neslíbí potvrzení, které nedorazilo
+  return res.status(200).json({ ok: true, autoreply });
 };
