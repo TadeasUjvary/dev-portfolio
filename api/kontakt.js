@@ -6,7 +6,7 @@
  *
  * Nastav ve Vercelu (Settings → Environment Variables):
  *   RESEND_API_KEY   povinné, klíč z resend.com
- *   MAIL_TO          kam chodí notifikace       (výchozí: taujvyk@gmail.com)
+ *   MAIL_TO          kam chodí notifikace       (výchozí: ujvyk@icloud.com)
  *   MAIL_FROM        odesílatel                 (výchozí: onboarding@resend.dev)
  *
  * MAIL_FROM na "poptavka@tadeas-ujvary.cz" přepni až po ověření domény v Resendu.
@@ -51,7 +51,7 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Příliš dlouhý vstup' });
   }
 
-  const to = process.env.MAIL_TO || 'taujvyk@gmail.com';
+  const to = process.env.MAIL_TO || 'ujvyk@icloud.com';
   const from = process.env.MAIL_FROM || 'onboarding@resend.dev';
 
   // 1) notifikace mně — tahle musí projít
