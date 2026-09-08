@@ -1,2 +1,19 @@
 User-agent: *
 Allow: /
+Disallow: /demos/
+
+# Vyhledávače (Google, Seznam, Bing) – plný přístup k portfoliu
+# /demos/ jsou ukázkové redesigny cizích firem, do indexu nepatří
+User-agent: Googlebot
+Allow: /
+Disallow: /demos/
+
+User-agent: SeznamBot
+Allow: /
+Disallow: /demos/
+
+User-agent: bingbot
+Allow: /
+Disallow: /demos/
+
+Sitemap: https://tadeas-ujvary.cz/sitemap.xml

@@ -24,6 +24,15 @@
       ]
     },
     {
+      "source": "/demos/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
       "source": "/(favicon.ico|favicon.svg|apple-touch-icon.png|icon-192.png|icon-512.png|site.webmanifest)",
       "headers": [
         {
