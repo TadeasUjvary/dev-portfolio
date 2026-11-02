@@ -5,5 +5,9 @@
   "compatibility_date": "2026-10-01",
   "workers_dev": true,
   "preview_urls": false,
+  "routes": [
+    { "pattern": "tadeas-ujvary.cz", "custom_domain": true },
+    { "pattern": "www.tadeas-ujvary.cz", "custom_domain": true }
+  ],
   "assets": { "directory": "." }
 }
