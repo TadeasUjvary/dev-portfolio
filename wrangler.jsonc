@@ -1,7 +1,8 @@
-// Cloudflare Worker: statický web, soubory servíruje platforma. Co se nenahrává, určuje .assetsignore.
+// Cloudflare Worker: statický web, worker.js jen přesměrovává na hlavní adresu. Co se nenahrává, určuje .assetsignore.
 {
   "$schema": "https://www.unpkg.com/wrangler/config-schema.json",
   "name": "portfolio",
+  "main": "worker.js",
   "compatibility_date": "2026-10-01",
   "workers_dev": true,
   "preview_urls": false,
@@ -9,5 +10,5 @@
     { "pattern": "tadeas-ujvary.cz", "custom_domain": true },
     { "pattern": "www.tadeas-ujvary.cz", "custom_domain": true }
   ],
-  "assets": { "directory": "." }
+  "assets": { "directory": ".", "binding": "ASSETS", "run_worker_first": true, "not_found_handling": "404-page" }
 }
